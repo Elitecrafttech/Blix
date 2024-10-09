@@ -1,14 +1,13 @@
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { View, Text } from 'react-native'
+// run rnfs
 
-const dashboard = () => {
+export default function dashboard() {
   return (
     <View>
-      <Text>
-        hello world
-      </Text>
+      <Text>dashboard</Text>
     </View>
   )
 }
 
-export default dashboard
+const styles = StyleSheet.create({})

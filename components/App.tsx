@@ -1,15 +1,31 @@
-import { ThemeProvider } from '@react-navigation/native'
-import { Stack } from 'expo-router'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { SafeAreaView, View, Text, ScrollView } from 'react-native'
 
-const App = () => {
+export default function App() {
   return (
-    <ScrollView>
-      
-    </ScrollView>
-      
+    <View>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+      <Text>App</Text>
+
+    </View>
   )
 }
 
-export default App
+const styles = StyleSheet.create({})
