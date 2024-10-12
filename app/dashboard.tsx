@@ -5,7 +5,9 @@ import React from 'react'
 export default function dashboard() {
   return (
     <View>
-      <Text>dashboard</Text>
+      <Text>
+        
+      </Text>
     </View>
   )
 }
