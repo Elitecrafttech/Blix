@@ -35,6 +35,8 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'onbording' }} />
         <Stack.Screen name="+not-found" options={{ title: 'Page Not Found' }} />
+        <Stack.Screen name="+not-" options={{ title: 'Page Not Found' }} />
+
       </Stack>
     {/* </ThemeProvider> */}
     </AppContextProvider>
