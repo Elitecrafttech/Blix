@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { View, Text, Image, Pressable, Dimensions } from 'react-native';
 
@@ -40,7 +41,7 @@ export default function Onboarding() {
         <Pressable className='items-center flex-row justify-center gap-[40px]' style={{marginTop: windowHeight * 0.05}}>
           <Text className='bg-[#F6F8FE] border-[1px] border-[#FFAB10] text-[#FFAB10] text-[16px] p-[12px] rounded-[18px] text-center' style={{width: windowWidth * 0.35}}>Sign In</Text>
 
-          <Text className='bg-[#FFAB10] text-[white] text-[16px] p-[12px] rounded-[18px] text-center' style={{width: windowWidth * 0.35}}>Register</Text>
+          <Text className='bg-[#FFAB10] text-[white] text-[16px] p-[12px] rounded-[18px] text-center' style={{width: windowWidth * 0.35}}>Register now</Text>
         </Pressable>
     </View>
     </View>

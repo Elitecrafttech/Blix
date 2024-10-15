@@ -9,6 +9,7 @@ import "../global.css"
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { AppContextProvider } from '@/context/AppContext';
+import React from 'react';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -33,10 +34,10 @@ export default function RootLayout() {
     <AppContextProvider>
       {/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
       <Stack>
+        <Stack.Screen name="dashboard"  />
         <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'onbording' }} />
-        <Stack.Screen name="+not-found" options={{ title: 'Page Not Found' }} />
-        <Stack.Screen name="+not-" options={{ title: 'Page Not Found' }} />
-
+        {/* <Stack.Screen name="+not-found" options={{ title: 'Page Not Found' }} /> */}
+        {/* <Stack.Screen name="+not-" options={{ title: 'Page Not Found' }} /> */}
       </Stack>
     {/* </ThemeProvider> */}
     </AppContextProvider>
