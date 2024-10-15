@@ -1,7 +1,9 @@
 import { View, Text, Dimensions, TextInput, Pressable, Image, ScrollView, StyleSheet } from 'react-native'
-import { useEffect, useState } from 'react'; 
+import { useEffect, useState, useContext } from 'react'; 
 import { router, useNavigation } from 'expo-router';
-import ToastManager, { Toast } from 'toastify-react-native'
+import ToastManager, { Toast } from 'toastify-react-native';
+import { AppContext } from '@/context/AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const windowDimensions = Dimensions.get('window');
@@ -9,8 +11,9 @@ const screenDimensions = Dimensions.get('screen');
 
 export default function Signin() {
 
-    // const navigation = useNavigation();
+    const {setUser} = useContext(AppContext)
 
+    // const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [Loading, setLoading] = useState(false);
@@ -49,9 +52,13 @@ export default function Signin() {
         if(response.ok){
             setLoading(false);
             const message = await response.json();
+            setUser(JSON.stringify(message));
+            AsyncStorage.setItem("tk", JSON.stringify(message))
 
+            console.log(message);
+            
             Toast.success(message.message);
-            router.push('/Profile');
+            router.push('/dashboard');
         }else{
             setLoading(false);
             const error = await response.json();

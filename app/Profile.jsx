@@ -1,11 +1,13 @@
 import { View, Text, Dimensions, Pressable, Image, ScrollView, StyleSheet, } from 'react-native'
-import { useEffect, useState } from 'react'; 
+import { useEffect, useState, useContext } from 'react'; 
 import { router, useNavigation } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import Entypo from '@expo/vector-icons/Entypo';
 import Lock from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Bottombar from './Bottombar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppContext } from '@/context/AppContext';
 
 
 const windowDimensions = Dimensions.get('window');
@@ -13,7 +15,8 @@ const screenDimensions = Dimensions.get('screen');
 
 export default function Profile() {
 
-    // const navigation = useNavigation();
+    const {userData, getUserDetails} = useContext(AppContext)
+    
 
 
     const editinfo = () => {
@@ -29,7 +32,10 @@ const [dimensions, setDimensions] = useState({
     screen: screenDimensions,
     });
 
+    
+
     useEffect(() => {
+        getUserDetails()
     const subscription = Dimensions.addEventListener(
         'change',
         ({ window, screen }) => {
@@ -52,8 +58,8 @@ const [dimensions, setDimensions] = useState({
                     <View className='flex-row gap-[20px] items-center'>
                         <Image source={require('@/assets/images/profile.png')}/>
                         <View>
-                            <Text className='font-bold text-[17px] capitalize'>jays alimi</Text>
-                            <Text className='text-[16px]'>talk2jays0x@gmail.com</Text>
+                            <Text className='font-bold text-[17px] capitalize'>{userData?.wallet.user.username}</Text>
+                            <Text className='text-[16px]'>{userData?.wallet.user.email}</Text>
                         </View>
                     </View>
                 </View>

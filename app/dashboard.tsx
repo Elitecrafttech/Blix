@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
 import { View, Text, Image, Pressable, Dimensions, ScrollView } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -7,15 +7,23 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { AppContext } from '@/context/AppContext';
 
 export default function Dashboard() {
+
+  const {userData, getUserDetails} = useContext(AppContext)
+
+  useEffect(() => {
+    getUserDetails();
+  }, [])
+
 
   return (
     <ScrollView className='w-[100%] gap-3 flex-col py-[20px] px-[30px] bg-white'>
             <View className='flex-row w-[100%] justify-between items-center'>
                 <View className='flex-row gap-2 items-center'>
                   <Image source={require('@/assets/images/profile.png')} />
-                  <Text className='text-[17px]'>Bitero Biteso Chrismi</Text>
+                  <Text className='text-[17px]'>{userData?.wallet.user.username}</Text>
                 </View>
                 <View className=' rounded-full border border-gray-300 p-[8px]'>
                   <AntDesign name="bells" size={24} color="black" />
@@ -26,7 +34,7 @@ export default function Dashboard() {
                 <Text className='text-[#00000080] text-[20px] font-bold'>Your Balance</Text>
                 <Feather name="eye" size={20} color="black" />
               </View>
-              <Text className='text-[32px] font-bold'>N 23,445,390.32</Text>
+              <Text className='text-[32px] font-bold'>N {userData?.wallet.balance}</Text>
             </View>
             <View className='W-[100%] mt-[35px] flex-row justify-between items-center '>
               <Pressable className='flex-row justify-center rounded-[20px] items-center py-[20px] gap-3 w-[48%] bg-[#F6F8FE]'>

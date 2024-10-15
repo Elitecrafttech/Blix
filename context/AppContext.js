@@ -31,30 +31,53 @@ export function AppContextProvider({ children }) {
     } 
 
     const [user, setUser] = useState(()=>{
-      const token = AsyncStorage.getItem("token");
-      return token ? token : null;
+      const token = AsyncStorage.getItem("tk");      
+      return token.token ? JSON.parse(token.token) : null;
     })
 
-    function getUser(){
-      const userToken = AsyncStorage.getItem("token");
-      if(userToken){
-        setIsAuthenticated(true);
-        setUser(userToken);
+    const tk = JSON.parse(user)
+    console.log("token ",tk);
+    const [userData, setUserData] = useState({});
+    const getUserDetails = async()=>{
+      const userd = await fetch('https://instant-chain.onrender.com/dashboard', {
+          headers: {
+              'Authorization': `Bearer ${tk.token}`,
+              "content-type":"application/json" 
+          }
+      });
+      if(userd.ok){
+          const data = await userd.json();
+          setUserData(data)
+          console.log(data);
+          // console.log(data);
+
+          // setUser(data);
       }else{
-        setIsAuthenticated(false);
-        setUser(null);
+          const data = await userd.json();
+          console.log(data);
+          
       }
+  }
+
+
+   useEffect(() => {
+    if(user){
+      AsyncStorage.setItem("tk", JSON.stringify(user))
+      setUser(JSON.stringify(user))
+      console.log("user's token", user);
+      setIsAuthenticated(true);
+    }else{
+      console.log("No token");
+      
+      AsyncStorage.removeItem("tk")
+      setIsAuthenticated(false);
     }
-
-
-  //  useEffect(() => {
-  //    getUser()
-  //  }, [])
+   }, [])
    
 
 
   return (
-    <AppContext.Provider value={{isAuthenticated, setIsAuthenticated, changeColor, bgColor, textColor, user, setUser}} >
+    <AppContext.Provider value={{isAuthenticated, setIsAuthenticated, changeColor, bgColor, textColor, user, setUser, userData, setUserData, getUserDetails}} >
         {children}
     </AppContext.Provider>
   );
