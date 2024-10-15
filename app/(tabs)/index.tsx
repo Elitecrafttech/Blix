@@ -1,6 +1,6 @@
 import { AppContext } from '@/context/AppContext'
 import React, { useContext } from 'react'
-import Onboarding from '../onbording';
+import Onboarding from '../Onbording';
 
 export default function index() {
   const {isAuthenticated} = useContext(AppContext);

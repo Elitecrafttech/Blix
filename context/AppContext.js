@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { createContext } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export const AppContext = createContext();
@@ -29,11 +29,32 @@ export function AppContextProvider({ children }) {
       AsyncStorage.setItem('textColor', "white");
       }
     } 
-    
+
+    const [user, setUser] = useState(()=>{
+      const token = AsyncStorage.getItem("token");
+      return token ? token : null;
+    })
+
+    function getUser(){
+      const userToken = AsyncStorage.getItem("token");
+      if(userToken){
+        setIsAuthenticated(true);
+        setUser(userToken);
+      }else{
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    }
+
+
+  //  useEffect(() => {
+  //    getUser()
+  //  }, [])
+   
 
 
   return (
-    <AppContext.Provider value={{isAuthenticated, setIsAuthenticated, changeColor, bgColor, textColor}} >
+    <AppContext.Provider value={{isAuthenticated, setIsAuthenticated, changeColor, bgColor, textColor, user, setUser}} >
         {children}
     </AppContext.Provider>
   );

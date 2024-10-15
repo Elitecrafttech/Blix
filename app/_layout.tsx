@@ -2,13 +2,13 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'react-native-reanimated';
 import "../global.css"
 
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { AppContextProvider } from '@/context/AppContext';
+import { AppContextProvider } from '../context/AppContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -33,10 +33,13 @@ export default function RootLayout() {
     <AppContextProvider>
       {/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'onbording' }} />
-        <Stack.Screen name="+not-found" options={{ title: 'Page Not Found' }} />
-        <Stack.Screen name="+not-" options={{ title: 'Page Not Found' }} />
-
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="Signin" options={{ headerShown: false }} />
+        <Stack.Screen name="Register" options={{ headerShown: false }} />
+        <Stack.Screen name="Profile" options={{ headerShown: false }} />
+        <Stack.Screen name="Editinfo" options={{ headerShown: true }} />
+        <Stack.Screen name="Accountsecurity" options={{ headerShown: true }} />
+        <Stack.Screen name="+not-found" />
       </Stack>
     {/* </ThemeProvider> */}
     </AppContextProvider>
