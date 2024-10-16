@@ -100,7 +100,7 @@ const [dimensions, setDimensions] = useState({
 
   return (
     <ScrollView 
-        contentContainerStyle={styles.contentContainer}
+        className='w-[100%] py-[50px]'
       >
         
       <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
