@@ -1,13 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { Stack } from '@mui/material'
+// import { StyleSheet, Text, View } from 'react-native'
+// import React from 'react'
 
-export default function App() {
-  return (
-    <View>
-      <Stack.Screen name = "onboarding"/>
-    </View>
-  )
-}
+// // import { Stack } from '@mui/material'
 
-const styles = StyleSheet.create({})
+// export default function App() {
+//   return (
+//     <View>
+//       <Stack.Screen name = "onboarding"/>
+//     </View>
+//   )
+// }
+
+// const styles = StyleSheet.create({})
