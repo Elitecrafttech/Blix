@@ -9,19 +9,46 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { AppContext } from '@/context/AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Dashboard() {
 
   const {userData, getUserDetails} = useContext(AppContext)
+  const [transaction, setTransaction] = useState([])
 
   useEffect(() => {
     getUserDetails();
   }, [])
 
+<<<<<<< HEAD
   const handlePay = () => {
     router.push('/Payment');
   }
 
+=======
+    const baserl = 'https://instant-chain.onrender.com/dashboard'
+     const token = AsyncStorage.getItem("tk")
+    async function handleTransaction(){
+      try {
+        const responds = await fetch(baserl, {
+          headers:{
+            "Authorization": "Bearer " + token
+          }
+        })
+        const data = await responds.json()
+        if(responds.ok){
+          setTransaction(data.transaction)
+          console.log("transaction is " + data.transaction)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    useEffect(() => {
+        handleTransaction()
+    }, [])
+    
+>>>>>>> 860343120c12fc0cfeff72681a48f13da7f292d7
 
   return (
     <ScrollView className='w-[100%] gap-3 flex-col pt-5 px-[30px] bg-white'>
@@ -48,7 +75,11 @@ export default function Dashboard() {
               </Pressable>
               <Pressable className='flex-row justify-center rounded-[20px] items-center py-[20px] gap-3 w-[48%] bg-[#0000FF]'>
                   <AntDesign name="plus" size={24} color="white" />
+<<<<<<< HEAD
                   <Text className='text-[20px] text-white font-bold' onPress={handlePay}>Share</Text>
+=======
+                  <Text className='text-[20px] text-white font-bold'>Fund Wallet </Text>
+>>>>>>> 860343120c12fc0cfeff72681a48f13da7f292d7
               </Pressable>
             </View>
             <View className='w-[100%] flex-row mt-[35px] justify-around items-center'>
@@ -79,8 +110,22 @@ export default function Dashboard() {
             </View>
             <View className='w-[100%] h-[3px] bg-[#F6F8FE] mt-[25px]'></View>
 
+            {/* if theres is a transaction it returns te transaction, else it will not return any transaction */}
+            {
+              transaction.length > 0 ? transaction.map((t, index) => (
+                <View key={index}>
+                  <Text>{t}</Text>
+                </View>
+              )) : 
 
-            <View className='mt-[30px] gap-5 pb-[100px]'>
+              <View className='w-[100%] justify-center items-center p-[50px]'>
+                 <Text className='text-[20px] font-bold'>No Transaction Made</Text>
+              </View>
+            }
+
+
+
+            {/* <View className='mt-[30px] gap-5 pb-[100px]'>
               <View className='flex-row justify-between items-center'>
                 <View className='rounded-full border border-gray-300 p-[15px]'>
                   <Feather name="phone" size={24} color="black" />
@@ -99,7 +144,7 @@ export default function Dashboard() {
                 </View>
                 <View className='w-[75%] justify-between items-center flex-row h-[20px]'>
                   <View className='gap-2'>
-                    <Text className='text-[20px] font-bold'>Data bundle</Text>
+                    <Text className='text-[20px]  font-bold'>Data bundle</Text>
                     <Text className='text-[#0000005C] text-[13px]'>Data bundle Sent To +2349168243714</Text>
                   </View>
                   <Text className='text-[#0000FF] text-[15px] font-bold'>+250,000</Text>
@@ -129,7 +174,7 @@ export default function Dashboard() {
                   <Text className='text-[#0000FF] text-[15px] font-bold'>+250,000</Text>
                 </View>
               </View>
-            </View>
+            </View> */}
 
 
     </ScrollView>

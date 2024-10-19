@@ -151,7 +151,7 @@ const [dimensions, setDimensions] = useState({
            
             </View>
         </View>
-        <View className='items-center'>
+        <View className='items-center pb-[100px]'>
             <View className='flex-row'>
              <Text className='text-[16px] capitalize'>already have an account?  </Text>
              <Pressable>
