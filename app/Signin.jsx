@@ -1,6 +1,7 @@
 import { View, Text, Dimensions, TextInput, Pressable, Image, ScrollView, StyleSheet } from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { router } from 'expo-router';
+import Eye from '@expo/vector-icons/Feather'
 import ToastManager, { Toast } from 'toastify-react-native';
 import { AppContext } from '@/context/AppContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,6 +17,7 @@ export default function Signin() {
     // const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showpassword, setShowPassword] = useState(false);
     const [Loading, setLoading] = useState(false);
     // const [error, setError] = useState('');
 
@@ -58,7 +60,8 @@ export default function Signin() {
             console.log(message);
             
             Toast.success(message.message);
-            router.push('/dashboard');
+            // router.push('/dashboard');
+            router.push('/Profile');
         }else{
             setLoading(false);
             const error = await response.json();
@@ -74,7 +77,7 @@ export default function Signin() {
         router.push('/Register');
     }
     const forgetpass = () => {
-        router.push('/Resetpassword');
+        // router.push('/Resetpassword');
     }
 
 const [dimensions, setDimensions] = useState({
@@ -96,8 +99,7 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
   return (
-    <ScrollView 
-        contentContainerStyle={styles.contentContainer}>
+    <ScrollView className='w-[100%] py-[50px] bg-white'>
       <ToastManager width={300} textStyle={{fontSize:17}} />
       <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
         <View style={{gap: 30}}>
@@ -112,12 +114,15 @@ const [dimensions, setDimensions] = useState({
                 onChangeText={(text) => setEmail(text)}
                 />
 
-                <TextInput className='border-[1px] border-[#d1d4df] rounded-xl p-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.90}}
+                <View className='flex-row items-center  border-[1px] border-[#d1d4df] rounded-xl '>
+                <TextInput className='px-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.83, height: windowHeight * 0.06}}
                 placeholder='Password'
-                secureTextEntry={true}
+                secureTextEntry={!showpassword}
                 value={password}
                 onChangeText={(text) => setPassword(text)}
                 />
+                <Eye name={showpassword? "eye" : "eye-off"} size={21} onPress={()=>setShowPassword(!showpassword)}/>
+                </View>
                 
                 <Pressable className='items-end '>
                     <Text className='capitalize text-[#FFAB10] font-bold text-[16px]' onPress={forgetpass}>forgot password?</Text>
@@ -139,11 +144,3 @@ const [dimensions, setDimensions] = useState({
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-    contentContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    }
-  });

@@ -1,13 +1,22 @@
 import { View, Text, Dimensions,TouchableOpacity, } from 'react-native'
 import { useEffect, useState } from 'react'; 
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Bottombar() {
+
+    const peer = () =>{
+        router.push('PeerToPeer');
+    }
+    const profile = () =>{
+        router.push('Profile');
+    }
 
 
     const [dimensions, setDimensions] = useState({
@@ -39,11 +48,15 @@ export default function Bottombar() {
                 <Ionicons name='wallet' size={24} color="black"/>
                 <Text>Wallet</Text>
             </TouchableOpacity>
+            <TouchableOpacity className='items-center' onPress={peer}>
+            <FontAwesome5 name="money-check-alt" size={24} color="black" />
+                <Text>trade p2p</Text>
+            </TouchableOpacity>
             <TouchableOpacity className='items-center'>
             <MaterialIcons name="payment" size={24} color="black" />
                 <Text>Transaction</Text>
             </TouchableOpacity>
-            <TouchableOpacity className='items-center'>
+            <TouchableOpacity className='items-center' onPress={profile}>
             <Feather name="user" size={24} color="black" />
                 <Text>Profile</Text>
             </TouchableOpacity>

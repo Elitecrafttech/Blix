@@ -25,6 +25,8 @@ export default function Resetpassword() {
         };
         setError('');
         alert('Successfully Reset Password')
+
+        // const response = await fetch("")
     };
 
 const [dimensions, setDimensions] = useState({
@@ -46,7 +48,7 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
   return (
-    <ScrollView >
+    <ScrollView className='w-[100%] py-[50px] bg-white'>
       <View  style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen,}}>
         <View className='gap-[30px]'>
             

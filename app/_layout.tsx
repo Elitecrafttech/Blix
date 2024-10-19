@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import 'react-native-reanimated';
+import { GestureHandlerRootView} from 'react-native-gesture-handler'
 import "../global.css"
 
 
@@ -30,17 +31,26 @@ export default function RootLayout() {
   }
 
   return (
+    <GestureHandlerRootView>
     <AppContextProvider>
       <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="Signin" options={{ headerShown: false }} />
         <Stack.Screen name="Register" options={{ headerShown: false }} />
         <Stack.Screen name="Profile" options={{ headerShown: false }} />
-        <Stack.Screen name="Editinfo" options={{ headerShown: true }} />
-        <Stack.Screen name="Accountsecurity" options={{ headerShown: true }} />
+        <Stack.Screen name="Editinfo" options={{ headerShown: false }} />
+        <Stack.Screen name="Accountsecurity" options={{ headerShown: false }} />
+        <Stack.Screen name="Resetpassword" options={{ headerShown: false }} />
+        <Stack.Screen name="Resetpin" options={{ headerShown: false }} />
+        <Stack.Screen name="Helpsupport" options={{ headerShown: false }} />
+        <Stack.Screen name="Legalpolicy" options={{ headerShown: false }} />
+        <Stack.Screen name="PeerToPeer" options={{ headerShown: false }} />
+        <Stack.Screen name="Tradecrypto" options={{ headerShown: false }} />
+        <Stack.Screen name="Tradedeatails" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
         <Stack.Screen name="dashboard"  options={{ headerShown: false }}/>
       </Stack>
     </AppContextProvider>
+    </GestureHandlerRootView>
   );
 }

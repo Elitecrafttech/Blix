@@ -13,10 +13,10 @@ export default function AccountSecurity() {
 
 
     const Resetpass = () => {
-        navigation.navigate('Resetpassword');
+        router.push('Resetpassword')
     }
     const Resetpin = () => {
-        router.push('Resetpass');
+        router.push('Resetpin');
     }
 
 
@@ -39,11 +39,11 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
   return (
-         <ScrollView className='flex-[1] mt-[30px]' style={{width: windowWidth, height: windowHeight - 60}}>
+         <ScrollView className='w-[100%] py-[50px] bg-white'  style={{width: windowWidth, height: windowHeight - 60}}>
           <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
                 <View className='gap-[20px]'>
                 
-                    <View className='border-[1px] border-[#d1d4df] rounded-xl gap-[10px] px-[10px] py-[20px]'>
+                    <View className='border-[1px] border-[#eaebeb] rounded-xl gap-[10px] px-[10px] py-[20px]'>
                         <Pressable className='flex-row items-center justify-between' onPress={Resetpass}>
                             <View className='flex-row gap-[15px]'>
                                 <View className='bg-slate-200 rounded-full p-[10px]'><FontAwesome6 name="key" size={24} color="black" /></View>

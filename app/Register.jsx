@@ -1,5 +1,6 @@
 import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native'
 import { useEffect, useState } from 'react'; 
+import Eye from '@expo/vector-icons/Feather'
 import { router } from 'expo-router';
 import ToastManager, { Toast } from 'toastify-react-native'
 
@@ -16,6 +17,7 @@ export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showpassword, setShowpassword] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
     // const validMail = (email) => {
@@ -99,9 +101,7 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
   return (
-    <ScrollView 
-        className='w-[100%] py-[50px]'
-      >
+    <ScrollView className='w-[100%] py-[50px] bg-white' >
         
       <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
             <ToastManager width={300} textStyle={{fontSize:17}} />
@@ -123,19 +123,25 @@ const [dimensions, setDimensions] = useState({
                 onChangeText={(text) => setEmail(text)}
                 />
 
-                <TextInput className='border-[1px] border-[#d1d4df] rounded-xl p-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.90}}
+                <View className='flex-row items-center  border-[1px] border-[#d1d4df] rounded-xl '>
+                <TextInput className='px-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.83, height: windowHeight * 0.06}}
                 placeholder='Password'
-                secureTextEntry={true}
+                secureTextEntry={!showpassword}
                 value={password}
                 onChangeText={(text) => setPassword(text)}
                 />
+                    <Eye name={showpassword ? "eye" : "eye-off"} size={21} onPress={()=>setShowpassword(!showpassword)}/>
+                </View>
 
-                <TextInput className='border-[1px] border-[#d1d4df] rounded-xl p-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.90}}
+                <View className='flex-row items-center border-[1px] border-[#d1d4df] rounded-xl '>
+                <TextInput className='px-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.83, height: windowHeight * 0.06}}
                 placeholder='Confirm Password'
-                secureTextEntry={true}
+                secureTextEntry={!showpassword}
                 value={confirmPassword}
                 onChangeText={(text) => setConfirmPassword(text)}
                 />
+                    <Eye name={showpassword ? "eye" : "eye-off"} size={21} onPress={()=>setShowpassword(!showpassword)}/>
+                </View>
                 
             </View>
             <View>
@@ -158,11 +164,3 @@ const [dimensions, setDimensions] = useState({
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-});

@@ -6,7 +6,6 @@ const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Onboarding() {
-    // const navigation = useNavigation();
 
     const handleSignin = () => {
         router.push('/Signin');

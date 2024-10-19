@@ -6,7 +6,6 @@ import Entypo from '@expo/vector-icons/Entypo';
 import Lock from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Bottombar from './Bottombar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '@/context/AppContext';
 
 
@@ -25,6 +24,12 @@ export default function Profile() {
 
     const Accsecurity = () => {
         router.push('Accountsecurity');
+    };
+    const Helpsupport = () => {
+        router.push('Helpsupport');
+    };
+    const Legalpolicy = () => {
+        router.push('Legalpolicy');
     };
 
 const [dimensions, setDimensions] = useState({
@@ -58,13 +63,13 @@ const [dimensions, setDimensions] = useState({
                     <View className='flex-row gap-[20px] items-center'>
                         <Image source={require('@/assets/images/profile.png')}/>
                         <View>
-                            <Text className='font-bold text-[17px] capitalize'>{userData?.wallet.user.username}</Text>
-                            <Text className='text-[16px]'>{userData?.wallet.user.email}</Text>
+                            <Text className='font-bold text-[17px] capitalize'>{userData?.wallet?.user.username}</Text>
+                            <Text className='text-[16px]'>{userData?.wallet?.user.email}</Text>
                         </View>
                     </View>
                 </View>
                 <View className='gap-[20px]'>
-                    <View className='border-[1px] border-[#d1d4df] rounded-xl gap-[10px] px-[10px] py-[20px]'>
+                    <View className='border-[1px] border-[#eaebeb] rounded-xl gap-[10px] px-[10px] py-[20px]'>
                         <Pressable className='flex-row items-center justify-between' onPress={editinfo}>
                             <View className='flex-row gap-[15px]'>
                                 <View className='bg-slate-200 rounded-full p-[10px]'><Feather name="user" size={24} color="black" /></View>
@@ -89,7 +94,7 @@ const [dimensions, setDimensions] = useState({
                     </View>
 
 
-                    <View className='border-[1px] border-[#d1d4df] rounded-xl gap-[10px] px-[10px] py-[20px]'>
+                    <View className='border-[1px] border-[#eaebeb] rounded-xl gap-[10px] px-[10px] py-[20px]'>
                         <Pressable className='flex-row items-center justify-between'>
                             <View className='flex-row gap-[15px]'>
                                 <View className='bg-slate-200 rounded-full p-[10px]'><Feather name="settings" size={24} color="black" /></View>
@@ -101,7 +106,7 @@ const [dimensions, setDimensions] = useState({
                             <Entypo name="chevron-small-right" size={30} color="black" />
                         </Pressable>
                         <Text className='border-b-[0.3px] mb-[20px] border-b-gray-300'></Text>
-                        <Pressable className='flex-row items-center justify-between '>
+                        <Pressable className='flex-row items-center justify-between ' onPress={ Helpsupport}>
                             <View className='flex-row gap-[15px]'>
                                 <View className='bg-slate-200 rounded-full p-[10px]'><Feather name="help-circle" size={28} color="black" /></View>
                                 <View>
@@ -112,7 +117,7 @@ const [dimensions, setDimensions] = useState({
                             <Entypo name="chevron-small-right" size={30} color="black" />
                         </Pressable>
                         <Text className='border-b-[0.3px] mb-[20px] border-b-gray-300'></Text>
-                        <Pressable className='flex-row items-center justify-between '>
+                        <Pressable className='flex-row items-center justify-between ' onPress={Legalpolicy}>
                             <View className='flex-row gap-[15px]'>
                                 <View className='bg-slate-200 rounded-full p-[10px]'><MaterialIcons name="policy" size={24} color="black" /></View>
                                 <View>
@@ -125,7 +130,7 @@ const [dimensions, setDimensions] = useState({
                     </View>
 
 
-                    <Pressable className='flex-row items-center justify-between border-[1px] border-[#d1d4df] rounded-xl gap-[10px] px-[10px] py-[20px]'>
+                    <Pressable className='flex-row items-center justify-between border-[1px] border-[#eaebeb] rounded-xl gap-[10px] px-[10px] py-[20px]'>
                             <View className='flex-row gap-[15px] items-center'>
                                 <View className='bg-slate-200 rounded-full p-[10px]'><Lock name="logout" size={24} color="black" /></View>
                                     <Text className='font-semibold capitalize text-[20px]'>log out</Text>

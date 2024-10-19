@@ -1,15 +1,20 @@
 import { View, Text, Dimensions, Pressable, ScrollView, } from 'react-native'
-import { useEffect, useState } from 'react'; 
+import { useEffect, useState, useContext } from 'react'; 
 import { useNavigation } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { TextInput } from 'react-native-gesture-handler';
+import { AppContext } from '@/context/AppContext';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Editinfo() {
+  const { userData, getUserDetails} = useContext(AppContext);
   // const navigation = useNavigation();
+  const [name, setName] = useState(userData?.wallet?.user.username);
+  const [number, setNumber] = useState(userData?.wallet?.user.phonenumber)
 
   const [dimensions, setDimensions] = useState({
     window: windowDimensions,
@@ -17,6 +22,7 @@ export default function Editinfo() {
     });
 
     useEffect(() => {
+      getUserDetails()
     const subscription = Dimensions.addEventListener(
         'change',
         ({ window, screen }) => {
@@ -30,17 +36,20 @@ export default function Editinfo() {
     const windowHeight = dimensions.window.height;
 
   return (
-    <ScrollView >
+    <ScrollView className='w-[100%] py-[50px] bg-white'>
       <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
         <View className='gap-[140px]'>
             
             <View className='gap-[40px]'>
 
                 <View className='gap-[18px] '>
-                    <Text className='capitalize text-[17px]'>full name</Text>
+                     <Text className='capitalize text-[17px]'>UserName</Text>
                     <View className='flex-row items-center gap-[5px] border-[1px] border-[#d1d4df] rounded-xl p-[10px]' style={{width: windowWidth * 0.90, height: windowHeight * 0.06}}>
-                    <Feather name="user" size={24} color="black" />
-                    <Text>jays alimi</Text>
+                      <Feather name="user" size={24} color="black" />
+                      <TextInput className='px-[10px] placeholder:text-[17px] ' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
+                      value={name}
+                      onChangeText={setName}
+                      />
                     </View>
                 </View>
 
@@ -48,7 +57,7 @@ export default function Editinfo() {
                     <Text className='capitalize text-[17px]'>email address</Text>
                     <View className='flex-row items-center gap-[5px] border-[1px] border-[#d1d4df] rounded-xl p-[10px]' style={{width: windowWidth * 0.90, height: windowHeight * 0.06}}>
                     <Fontisto name="email" size={24} color="black" />
-                      <Text>talk2jays0x@gmail.com</Text>
+                      <Text>{userData?.wallet?.user.email}</Text>
                     </View>
                 </View>
                 
@@ -56,7 +65,12 @@ export default function Editinfo() {
                     <Text className='capitalize text-[17px]'>phone no.</Text>
                     <View className='flex-row items-center gap-[5px] border-[1px] border-[#d1d4df] rounded-xl p-[10px]' style={{width: windowWidth * 0.90, height: windowHeight * 0.06}}>
                     <Ionicons name="call-outline" size={24} color="black" />
-                      <Text>+234 91 6824 3714</Text>
+                      {/* <Text>+234 91 6824 3714</Text> */}
+                      <TextInput className='px-[10px] placeholder:text-[17px] ' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
+                      value={number}
+                      onChangeText={setNumber}
+                      keyboardType='numeric'
+                      />
                     </View>
                 </View>
                 

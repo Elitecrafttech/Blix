@@ -49,7 +49,7 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
   return (
-    <ScrollView >
+    <ScrollView className='w-[100%] py-[50px] bg-white'>
       <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
         <View className='gap-[150px]'>
 

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
+import { router } from 'expo-router';
 import { View, Text, Image, Pressable, Dimensions, ScrollView } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
@@ -16,6 +17,10 @@ export default function Dashboard() {
   useEffect(() => {
     getUserDetails();
   }, [])
+
+  const handlePay = () => {
+    router.push('/Payment');
+  }
 
 
   return (
@@ -43,7 +48,7 @@ export default function Dashboard() {
               </Pressable>
               <Pressable className='flex-row justify-center rounded-[20px] items-center py-[20px] gap-3 w-[48%] bg-[#0000FF]'>
                   <AntDesign name="plus" size={24} color="white" />
-                  <Text className='text-[20px] text-white font-bold'>Share</Text>
+                  <Text className='text-[20px] text-white font-bold' onPress={handlePay}>Share</Text>
               </Pressable>
             </View>
             <View className='w-[100%] flex-row mt-[35px] justify-around items-center'>
