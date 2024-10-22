@@ -57,7 +57,7 @@ const [dimensions, setDimensions] = useState({
                     <Text className='capitalize text-[17px]'>old password</Text>
                     <View className='flex-row items-center gap-[5px] border-[1px] border-[#d1d4df] rounded-xl p-[10px]' style={{width: windowWidth * 0.90, height: windowHeight * 0.06}}>
                         <Eye name={showpassword ?  'eye' : 'eye-off'} size={21} onPress={()=>setshowPassword(!showpassword)}/>
-                        <TextInput className='px-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
+                        <TextInput className='px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
                         placeholder='Password'
                         secureTextEntry={!showpassword}
                         value={oldpassword}
@@ -69,7 +69,7 @@ const [dimensions, setDimensions] = useState({
                     <Text className='capitalize text-[17px]'>new password</Text>
                     <View className='flex-row items-center gap-[5px] border-[1px] border-[#d1d4df] rounded-xl p-[10px]' style={{width: windowWidth * 0.90, height: windowHeight * 0.06}}>
                         <Eye name={showpassword ?  'eye' : 'eye-off'} size={21} onPress={()=>setshowPassword(!showpassword)}/>
-                        <TextInput className='px-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
+                        <TextInput className='px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
                         placeholder='Password'
                         secureTextEntry={!showpassword}
                         value={newpassword}

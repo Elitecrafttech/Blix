@@ -18,5 +18,5 @@
     "context/AppContext.types.js",
     "context/AppContext.js",
     "nativewind-env.d.ts"
-, "app/Signin.jsx", "app/Onbording.jsx", "app/Resetpin.jsx", "app/Resetpassword.jsx", "app/Register.jsx", "app/Profile.jsx", "app/Editinfo.jsx", "app/Createpin.jsx", "app/Confirmpin.jsx", "app/Bottombar.jsx", "app/Accountsecurity.jsx"  ]
+, "index.tsx","app/Signin.jsx", "app/Onbording.jsx", "app/Resetpin.jsx", "app/Resetpassword.jsx", "app/Register.jsx", "app/Profile.jsx", "app/Editinfo.jsx", "app/Createpin.jsx", "app/Confirmpin.jsx", "app/Bottombar.jsx", "app/Accountsecurity.jsx", "app/bording"  ]
 }

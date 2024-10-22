@@ -11,6 +11,9 @@ const screenDimensions = Dimensions.get('screen');
 
 export default function Bottombar() {
 
+    const home = () =>{
+        router.push('dashboard');
+    }
     const peer = () =>{
         router.push('PeerToPeer');
     }
@@ -40,7 +43,7 @@ export default function Bottombar() {
   return (
     <View style={{width: windowWidth}}>
       <View className='absolute bottom-0 flex-row justify-around py-[20px] items-center bg-white h-[60px] shadow-lg shadow-black/30' style={{width: windowWidth}}>
-            <TouchableOpacity className='items-center'>
+            <TouchableOpacity className='items-center' onPress={home}>
                 <Ionicons name='home' size={24} color="black"/>
                 <Text>Home</Text>
             </TouchableOpacity>

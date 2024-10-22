@@ -54,12 +54,12 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
   return (
-    <View className='flex-[1] justify-center mt-[30px]' style={{width: windowWidth, height: windowHeight - 60}}>
+    <View className='flex-[1] justify-center' style={{width: windowWidth, height: windowHeight - 60}}>
          <ScrollView>
           <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
             <View style={{gap: 30}}>
                 <View className='gap-[20px]'>
-                    <Text className='font-medium text-[28px] capitalize self-center'>profile</Text>
+                    {/* <Text className='font-medium text-[28px] capitalize self-center'>profile</Text> */}
                     <View className='flex-row gap-[20px] items-center'>
                         <Image source={require('@/assets/images/profile.png')}/>
                         <View>

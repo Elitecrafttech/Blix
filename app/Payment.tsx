@@ -70,12 +70,12 @@ export default function Payment() {
       <View className='gap-5'>
          <Text>Payment</Text>
          <View className='gap-5'>
-            <TextInput className='border border-[grey] p-[10px]'
+            <TextInput className='border border-[grey] p-[10px] placeholder:text-[gray]'
             placeholder='Enter Payment Mail'
             value={mail}
             onChangeText={setMail}
             />
-            <TextInput className='border border-[grey] p-[10px]'
+            <TextInput className='border border-[grey] p-[10px] placeholder:text-[gray]'
             placeholder='Enter Amount'
             value={amount}
             onChangeText={setAmount}

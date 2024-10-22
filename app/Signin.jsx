@@ -77,7 +77,7 @@ export default function Signin() {
         router.push('/Register');
     }
     const forgetpass = () => {
-        // router.push('/Resetpassword');
+        router.push('/Forgetpassword');
     }
 
 const [dimensions, setDimensions] = useState({
@@ -108,14 +108,14 @@ const [dimensions, setDimensions] = useState({
                 <Text className='text-[16px]'>welcome back, kindly login to your account</Text>
             </View>
             <View className='gap-[40px]'>
-                <TextInput className='border-[1px] border-[#d1d4df] rounded-xl p-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.90}}
+                <TextInput className='border-[1px] border-[#d1d4df] rounded-xl p-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.90}}
                 placeholder='Email Address'
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 />
 
                 <View className='flex-row items-center  border-[1px] border-[#d1d4df] rounded-xl '>
-                <TextInput className='px-[10px] placeholder:text-[17px]' style={{width: windowWidth * 0.83, height: windowHeight * 0.06}}
+                <TextInput className='px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.83, height: windowHeight * 0.06}}
                 placeholder='Password'
                 secureTextEntry={!showpassword}
                 value={password}

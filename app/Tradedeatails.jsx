@@ -40,7 +40,7 @@ export default function Tradedeatails() {
                     <Text className='text-center capitalize'>you are about to trade (Assets) with (seller name)</Text>
                     <View className='gap-[8px]'>
                         <Text className='text-[15px] text-[#b6852a]'>The Amount In USD</Text>
-                        <TextInput className='border-[#eaebeb] border-[1px] rounded-xl px-[10px] placeholder:text-[17px] ' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
+                        <TextInput className='border-[#eaebeb] border-[1px] rounded-xl px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
                         placeholder='Amount You Want To Purchase'
                         value={amount}
                         onChangeText={setAmount}
@@ -50,7 +50,7 @@ export default function Tradedeatails() {
 
                     <View className='gap-[8px]'>
                         <Text className='text-[15px] text-[#b6852a] capitalize'>enter wallet address</Text>
-                        <TextInput className='border-[#eaebeb] border-[1px] rounded-xl px-[10px] placeholder:text-[17px] ' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
+                        <TextInput className='border-[#eaebeb] border-[1px] rounded-xl px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
                         placeholder='Wallet Address'
                         value={wallet}
                         onChangeText={setWallet}
