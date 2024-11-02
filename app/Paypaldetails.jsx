@@ -7,9 +7,9 @@ import { TextInput } from 'react-native-gesture-handler';
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
-export default function Tradedeatails() {
+export default function paypaldetails() {
     const [amount, setAmount] = useState('$ ');
-    const [wallet, setWallet] = useState('');
+    const [email, setEmail] = useState('');
 
   const [dimensions, setDimensions] = useState({
     window: windowDimensions,
@@ -35,9 +35,9 @@ export default function Tradedeatails() {
     <ScrollView className='w-[100%] py-[50px] bg-white'  style={{width: windowWidth, height: windowHeight - 60}}>
         <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
             <View className='gap-[20px] items-center'>
-                <Text className='capitalize text-center font-bold text-[25px] text-[#695e5e]'>Trade Details</Text>
+                {/* <Text className='capitalize text-center font-bold text-[25px] text-[#695e5e]'>Trade Details</Text> */}
                 <View className=' gap-[40px]'>
-                    <Text className='text-center capitalize'>you are about to trade (Assets) with (seller name)</Text>
+                    <Text className='text-center capitalize'>you are about to trade (Paypal) with (seller name)</Text>
                     <View className='gap-[8px]'>
                         <Text className='text-[15px] text-[#b6852a]'>The Amount In USD</Text>
                         <TextInput className='border-[#eaebeb] border-[1px] rounded-xl px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
@@ -49,11 +49,11 @@ export default function Tradedeatails() {
                     </View>
 
                     <View className='gap-[8px]'>
-                        <Text className='text-[15px] text-[#b6852a] capitalize'>enter wallet address</Text>
+                        <Text className='text-[15px] text-[#b6852a] capitalize'>Paypal email address</Text>
                         <TextInput className='border-[#eaebeb] border-[1px] rounded-xl px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
-                        placeholder='Wallet Address'
-                        value={wallet}
-                        onChangeText={setWallet}
+                        placeholder='Paypal Email Address'
+                        value={email}
+                        onChangeText={setEmail}
                         />
                     </View>
                     <View className=' gap-[10px] items-center flex-row ' style={{width: windowWidth * 0.83}}>

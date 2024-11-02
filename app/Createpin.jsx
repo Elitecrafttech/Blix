@@ -1,14 +1,18 @@
 import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native'
-import { useEffect, useRef, useState } from 'react'; 
+import { useContext, useEffect, useRef, useState } from 'react'; 
 import { router, useNavigation } from 'expo-router';
+import { AppContext } from '@/context/AppContext';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Createpin() {
-    // const navigation = useNavigation();
+    const navigation = useNavigation();
 
-    const [otp, setOtp] = useState(['','','','','',]);
+    const {user} = useContext(AppContext);
+    const tk = JSON.parse(user);
+
+    const [otp, setOtp] = useState(['','','','',]);
 
     const inputRefs = useRef([]);
 
@@ -23,11 +27,35 @@ export default function Createpin() {
         }
     };
 
-    const confirmpin = () => {
+    const confirmpin = async() => {
+        if(!otp){
+            return alert('Please enter OTP')
+            
+        }
         const otpValue = otp.join('');
+        if(otpValue){
+            const response = await fetch('https://instant-chain.onrender.com/create-pin', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tk}`
+                },
+                body: JSON.stringify({
+                    pin: otpValue,
+                })
+            });
+            if(response.ok){
+                const data = await response.json();
+                console.log(data);
 
-        console.log('OTP entered:', otpValue);
-        router.push('/Confirmpin');
+                // router.push('dashboard')
+                navigation.navigate('dashboard');
+                
+            }else{
+                console.log('Error creating pin');
+            }
+        }
+        
     };
 
 const [dimensions, setDimensions] = useState({

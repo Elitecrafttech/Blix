@@ -1,7 +1,7 @@
 import { View, Text, Dimensions,TouchableOpacity, } from 'react-native'
 import { useEffect, useState } from 'react'; 
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
@@ -10,15 +10,22 @@ const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Bottombar() {
+    const navigation = useNavigation();
 
     const home = () =>{
-        router.push('dashboard');
+        navigation.navigate('dashboard');
     }
     const peer = () =>{
-        router.push('PeerToPeer');
+        navigation.navigate('PeerToPeer');
     }
     const profile = () =>{
-        router.push('Profile');
+        navigation.navigate('Profile');
+    }
+    const trx = () =>{
+        navigation.navigate('Trxhistory');
+    }
+    const wallet = () =>{
+        navigation.navigate('Wallet');
     }
 
 
@@ -41,25 +48,25 @@ export default function Bottombar() {
         const windowHeight = dimensions.window.height;
 
   return (
-    <View style={{width: windowWidth}}>
-      <View className='absolute bottom-0 flex-row justify-around py-[20px] items-center bg-white h-[60px] shadow-lg shadow-black/30' style={{width: windowWidth}}>
-            <TouchableOpacity className='items-center' onPress={home}>
+    <View style={{width: windowWidth, }}>
+      <View className='absolute bottom-0 flex-row justify-around px-[20px] items-center bg-slate-50 h-[60px] shadow-lg shadow-black/30' style={{width: windowWidth, height: windowHeight * 0.08}}>
+            <TouchableOpacity className='items-center p-[10px]'  onPress={home}>
                 <Ionicons name='home' size={24} color="black"/>
                 <Text>Home</Text>
             </TouchableOpacity>
-            <TouchableOpacity className='items-center'>
+            <TouchableOpacity className='items-center p-[10px]' onPress={wallet}>
                 <Ionicons name='wallet' size={24} color="black"/>
                 <Text>Wallet</Text>
             </TouchableOpacity>
-            <TouchableOpacity className='items-center' onPress={peer}>
+            <TouchableOpacity className='items-center p-[10px]' onPress={peer}>
             <FontAwesome5 name="money-check-alt" size={24} color="black" />
                 <Text>trade p2p</Text>
             </TouchableOpacity>
-            <TouchableOpacity className='items-center'>
-            <MaterialIcons name="payment" size={24} color="black" />
+            <TouchableOpacity className='items-center p-[10px]'>
+            <MaterialIcons name="payment" size={24} color="black" onPress={trx}/>
                 <Text>Transaction</Text>
             </TouchableOpacity>
-            <TouchableOpacity className='items-center' onPress={profile}>
+            <TouchableOpacity className='items-center p-[10px]' onPress={profile}>
             <Feather name="user" size={24} color="black" />
                 <Text>Profile</Text>
             </TouchableOpacity>
@@ -67,3 +74,5 @@ export default function Bottombar() {
     </View>
   )
 }
+
+

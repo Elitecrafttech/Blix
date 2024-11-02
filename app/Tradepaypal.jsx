@@ -29,12 +29,12 @@ const Trade = [
         button: "Buy"
     },
 ]
-export default function Tradecrypto() {
+export default function Tradepaypal() {
     const navigation = useNavigation();
 
-    const crypto = () =>{
-        // router.push('Cryptodeatails');
-        navigation.navigate('Cryptodetails');
+    const paypal = () =>{
+        // router.push('Paypaldetails');
+        navigation.navigate('Paypaldetails');
     }
 
     const [dimensions, setDimensions] = useState({
@@ -70,7 +70,7 @@ export default function Tradecrypto() {
                                 <Text>{data.quantity}</Text>
                                 </View>
                                 <TouchableOpacity>
-                                 <Text className='border-[#FFAB10] border-[2px] p-[10px] text-center rounded-xl text-[#b6852a] w-[20vw] text-[17px]' onPress={crypto}>{data.button}</Text>
+                                 <Text className='border-[#FFAB10] border-[2px] p-[10px] text-center rounded-xl text-[#b6852a] w-[20vw] text-[17px]' onPress={paypal}>{data.button}</Text>
                                 </TouchableOpacity>
                             </View>  
                         ))}

@@ -1,12 +1,14 @@
 import { View, Text, Dimensions, Pressable, ScrollView} from 'react-native'
 import { useEffect, useState } from 'react';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { router, useNavigation } from 'expo-router';
 
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Cablestatus() {
+    const navigation = useNavigation();
 
 const [dimensions, setDimensions] = useState({
     window: windowDimensions,
@@ -26,12 +28,15 @@ const [dimensions, setDimensions] = useState({
     const windowWidth = dimensions.window.width;
     const windowHeight = dimensions.window.height;
 
+    const home = ()=>{
+        // router.push('/dashboard')
+        navigation.navigate('dashboard');
+    }
+
   return (
          <ScrollView className='w-[100%] py-[50px] bg-white' style={{width: windowWidth, height: windowHeight - 60}}>
           <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
                 <View className='gap-[15px]'>
-                   <Text className='capitalize text-center font-semibold text-[25px] '>cable TV</Text>
-
                    <MaterialCommunityIcons name="checkbox-marked-circle" size={60} color="#FFAB10" className='text-center'/>
                 
                     <View className='gap-[70px] px-[10px] py-[20px]'>
@@ -66,7 +71,7 @@ const [dimensions, setDimensions] = useState({
                 </View>
                 <View className='gap-[20px]'>
                     <Pressable className='bg-[#FFAB10] rounded-xl p-[8px] '>
-                        <Text className='text-center capitalize text-[20px] text-white'>close</Text>
+                        <Text className='text-center capitalize text-[20px] text-white' onPress={home}>close</Text>
                     </Pressable>
                     <Text className='text-center text-[red] text-[18px] font-medium capitalize'>report this transaction</Text>
                 </View>

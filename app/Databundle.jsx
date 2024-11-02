@@ -1,101 +1,159 @@
-import { View, Text, Dimensions, Pressable, ScrollView} from 'react-native'
-import { useEffect, useState } from 'react'; 
-import {Picker} from '@react-native-picker/picker';
+import { View, Text, Dimensions, Pressable, ScrollView, Alert } from 'react-native';
+import { useContext, useEffect, useState, useCallback } from 'react';
+import { Picker } from '@react-native-picker/picker';
 import { TextInput } from 'react-native-gesture-handler';
-
-
+import { useNavigation } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppContext } from '@/context/AppContext';
 
 const windowDimensions = Dimensions.get('window');
-const screenDimensions = Dimensions.get('screen');
 
 export default function Databundle() {
-    const [ provider, setProvider] = useState('');
-    const [ plan, setPlan] = useState('');
-    const [ number, setNumber] = useState('+234');
+  const navigation = useNavigation();
+  const { user } = useContext(AppContext);
+  const tk = JSON.parse(user);
 
+  const [provider, setProvider] = useState('mtn');
+  const [planOptions, setPlanOptions] = useState([]); 
+  const [selectedPlan, setSelectedPlan] = useState(''); 
+  const [number, setNumber] = useState('');
+  const [code, setCode] = useState('');
+  const [amount, setAmount] = useState(0);
+  // const [availability, setAvailability] = useState("");
+  const [dimensions, setDimensions] = useState(windowDimensions);
 
-const [dimensions, setDimensions] = useState({
-    window: windowDimensions,
-    screen: screenDimensions,
-    });
-
-    useEffect(() => {
-    const subscription = Dimensions.addEventListener(
-        'change',
-        ({ window, screen }) => {
-            setDimensions({ window, screen });
+  const fetchDataPackages = useCallback(async (selectedProvider) => {
+    try {
+      const response = await fetch("https://instant-chain.onrender.com/api/v1/trades/data-packages", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${tk}`,
         },
-        );
-        return () => subscription?.remove();
-    }, []);
+        body: JSON.stringify({ provider: selectedProvider }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setPlanOptions(data.packages || []); 
+      } else {
+        const error = await response.json();
+        console.error(error);
+        setPlanOptions([]); 
+      }
+    } catch (error) {
+      console.error(error.message);
+      setPlanOptions([]); 
+    }
+  }, [tk]);
+
+  const checkout = async () => {
+    if (!provider || !selectedPlan || !number || !code) {
+      Alert.alert('Please fill all fields or select plan');
+      return;
+    }
+    if(number.length < 11){
+      Alert.alert('recheck the phone number and try again');
+      return 
+  }
+
+    if (Number(amount) < 1) {
+        Alert.alert('Please select plan option to continue');
+        return;
+      }
+
+      // if (availability !== "available") {
+      //   Alert.alert('This plan is not available');
+      //   return;
+      // }
+
+      await AsyncStorage.setItem("amount", JSON.stringify(amount))
+      await AsyncStorage.setItem("beneficiary", number)
+      await AsyncStorage.setItem("provider", provider)
+      await AsyncStorage.setItem("code", code)
+      await AsyncStorage.setItem("plan", selectedPlan)
+
+    navigation.navigate("Datacheckout")
+  };
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setDimensions(window);
+    });
+    return () => subscription?.remove();
+  }, []);
+
+  const handleProviderChange = (value) => {
+    setProvider(value);
+    setSelectedPlan(''); 
+    setAmount(0); 
+    fetchDataPackages(value);
+  };
+
+  const handlePlanChange = (planName) => {
+    setSelectedPlan(planName);
     
-    const windowWidth = dimensions.window.width;
-    const windowHeight = dimensions.window.height;
+    const selectedPlanData = planOptions.find((pl) => pl.name === planName);
+    setAmount(selectedPlanData ? selectedPlanData.price : 0);
+    setCode(selectedPlanData ? selectedPlanData.productCode : 0);
+    // setAvailability(selectedPlanData ? selectedPlanData.status : null);
+    
+  };
 
   return (
-         <ScrollView className='w-[100%] py-[50px] bg-white' style={{width: windowWidth, height: windowHeight - 60}}>
-          <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
-                <View className='gap-[20px]'>
-                   <Text className='capitalize text-center font-bold text-[25px] '>data bundle</Text>
-                
-                    <View className=' gap-[50px] px-[10px] py-[20px]'>
-                    
-                        <View className=' gap-[50px]'>
-                            <View>
-                            <Text className='capitalize text-[18px] font-medium'>phone number</Text>
-                            <TextInput className='border-[#eaebeb] border-[1px] rounded-xl p-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
-                            placeholder='070 400 400 00'
-                            value={number}
-                            onChangeText={setNumber}
-                            keyboardType='Numeric'
-                            />
+    <ScrollView className="w-full py-12 bg-white" style={{ width: dimensions.width, height: dimensions.height - 60 }}>
+      <View style={{ padding: dimensions.width * 0.05, gap: 100, minHeight: dimensions.height }}>
+        <View className="gap-5 px-4 py-5">
+          <View className="gap-12">
+            <Text className="capitalize text-lg font-medium">Phone Number</Text>
+            <TextInput
+              className="border border-gray-300 rounded-xl p-2 placeholder-gray-500"
+              style={{ width: dimensions.width * 0.81, height: dimensions.height * 0.06 }}
+              placeholder="070 400 400 00"
+              value={number}
+              onChangeText={(text)=>{ const NumericText = text.replace(/[^0-9]/g, '').slice(0, 11); setNumber(NumericText)}}
+              keyboardType="numeric"
+            />
 
-                            </View>
-                            <View className='gap-[15px]'>
-                                <Text className='capitalize text-[18px] font-medium'>select provider</Text>
-                                <View className='border-[#eaebeb] border-[1px] rounded-xl'>
-                                    <Picker
-                                    selectedValue={provider}
-                                    onValueChange={(itemValue) => setProvider(itemValue)}
-                                    className=' h-[50] w-full'>
+            <Text className="capitalize text-lg font-medium">Select Provider</Text>
+            <View className='border border-gray-300 rounded-xl placeholder-gray-500'>
+              <Picker
+                selectedValue={provider}
+                onValueChange={handleProviderChange}
+                className=" h-12 w-full"
+              >
+                <Picker.Item label="Choose Option" value="" />
+                <Picker.Item label="MTN" value="mtn" />
+                <Picker.Item label="Glo" value="glo" />
+                <Picker.Item label="Airtel" value="airtel" />
+                <Picker.Item label="9mobile" value="9mobile" />
+              </Picker>
+            </View>
 
-                                    <Picker.Item label="Choose Option" value="" />
-                                        <Picker.Item label="provider1" value="provider1" />
-                                        <Picker.Item label="provider2" value="provider2" />
-                                        <Picker.Item label="provider3" value="provider3" />
-                                        <Picker.Item label="provider4" value="provider4" />
-                                    </Picker>
-                                </View>
-                            </View>
-                            <View className='gap-[15px]'>
-                                <Text className='capitalize text-[18px] font-medium'>select plan</Text>
-                                <View className='border-[#eaebeb] border-[1px] rounded-xl'>
-                                    <Picker
-                                    selectedValue={plan}
-                                    onValueChange={(itemValue) => setPlan(itemValue)}
-                                    className=' h-[50] w-full'>
+            <Text className="capitalize text-lg font-medium">Select Plan</Text>
+            <View className='border border-gray-300 rounded-xl placeholder-gray-500'>
+              <Picker
+                selectedValue={selectedPlan}
+                onValueChange={handlePlanChange}
+                className=" h-12 w-full"
+              >
+                {Array.isArray(planOptions) && planOptions.map((pl) => (
+                  <Picker.Item label={`${pl.name} (₦${pl.price})`} value={pl.name} key={pl.productCode} />
+                ))}
+              </Picker>
+            </View>
 
-                                    <Picker.Item label="Choose Option" value="" />
-                                        <Picker.Item label="plan1" value="plan1" />
-                                        <Picker.Item label="plan2" value="plan2" />
-                                        <Picker.Item label="plan3" value="plan3" />
-                                        <Picker.Item label="plan4" value="plan4" />
-                                    </Picker>
-                                </View>
-                            </View>
-                        </View>
-                        
-                        <View className='items-center gap-[10px]'>
-                            <Text className='capitalize text-[18px]'>amount</Text>
-                            <Text className='font-bold text-[30px]'>0.0</Text>
-                        </View>                     
-                    </View>
-                    <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]'>
-                     <Text className='text-center capitalize text-[20px] text-white'>Continue</Text>
-                    </Pressable>
-                </View>
-                
+            <View className="items-center gap-2">
+              <Text className="capitalize text-lg">Amount</Text>
+              <Text className="font-bold text-2xl">₦{amount.toFixed(2)}</Text> 
+            </View>
           </View>
-        </ScrollView>
+          <Pressable className="bg-yellow-500 rounded-xl p-2">
+            <Text className="text-center capitalize text-lg text-white" onPress={checkout}>
+              Continue
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    </ScrollView>
   );
-};
+}

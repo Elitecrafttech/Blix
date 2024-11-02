@@ -1,8 +1,9 @@
-import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native'
+import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet, SafeAreaView } from 'react-native'
 import { useEffect, useState } from 'react'; 
 import Eye from '@expo/vector-icons/Feather'
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import ToastManager, { Toast } from 'toastify-react-native'
+import Status from '@/components/Status';
 
 // import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,6 +12,7 @@ const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Register() {
+    const navigation = useNavigation();
 
 
     const [username, setUsername] = useState('');
@@ -68,7 +70,8 @@ export default function Register() {
             console.log(message.message);
             
             Toast.success(message.message);
-        router.push('/Createpin');
+        // router.push('/Createpin');
+            navigation.navigate('Createpin');
         }else{
             setIsClicked(false)
             const error = await response.json();
@@ -79,7 +82,8 @@ export default function Register() {
         
     };
     const signin = () => {
-        router.push('/Signin');
+        // router.push('/Signin');
+        navigation.navigate('Signin');
     }
 
 const [dimensions, setDimensions] = useState({
@@ -101,7 +105,10 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
   return (
-    <ScrollView className='w-[100%] py-[50px] bg-white' >
+    <SafeAreaView>
+        <Status/>
+
+        <ScrollView className='w-[100%] py-[50px] pt-[100px] bg-white' >
         
       <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
             <ToastManager width={300} textStyle={{fontSize:17}} />
@@ -113,54 +120,58 @@ const [dimensions, setDimensions] = useState({
             <View className='gap-[40px]'>
                 <TextInput className='border-[1px] border-[#d1d4df] rounded-xl p-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.90}}
                 placeholder='Username'
+                autoCapitalize="none"
                 value={username}
                 onChangeText={(text) => setUsername(text)}
                 />
                 
                 <TextInput className='border-[1px] border-[#d1d4df] rounded-xl p-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.90}}
                 placeholder='Email Address'
+                autoCapitalize="none"
+                keyboardType="email-address"
                 value={email}
-                onChangeText={(text) => setEmail(text)}
+                onChangeText={(text) => setEmail(text.replace(/\s/g, ''))}
                 />
 
                 <View className='flex-row items-center  border-[1px] border-[#d1d4df] rounded-xl '>
-                <TextInput className='px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.83, height: windowHeight * 0.06}}
+                <TextInput className='px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
                 placeholder='Password'
                 secureTextEntry={!showpassword}
                 value={password}
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={(text) => setPassword(text.replace(/\s/g, ''))}
                 />
-                    <Eye name={showpassword ? "eye" : "eye-off"} size={21} onPress={()=>setShowpassword(!showpassword)}/>
+                    <Eye name={showpassword ? "eye" : "eye-off"} size={21} className=' px-[8px] py-[15px]' onPress={()=>setShowpassword(!showpassword)}/>
                 </View>
 
                 <View className='flex-row items-center border-[1px] border-[#d1d4df] rounded-xl '>
-                <TextInput className='px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.83, height: windowHeight * 0.06}}
+                <TextInput className='px-[10px] placeholder:text-[17px] placeholder:text-[gray]' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
                 placeholder='Confirm Password'
                 secureTextEntry={!showpassword}
                 value={confirmPassword}
-                onChangeText={(text) => setConfirmPassword(text)}
+                onChangeText={(text) => setConfirmPassword(text.replace(/\s/g, ''))}
                 />
-                    <Eye name={showpassword ? "eye" : "eye-off"} size={21} onPress={()=>setShowpassword(!showpassword)}/>
+                    <Eye name={showpassword ? "eye" : "eye-off"} size={21} className=' px-[8px] py-[15px]' onPress={()=>setShowpassword(!showpassword)}/>
                 </View>
                 
             </View>
             <View>
-            <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]'>
-                <Text className='text-center capitalize text-[25px] text-white' onPress={handleSubmit}>{isClicked ? "Loading ...": "sign up"}</Text>
+            <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]' onPress={handleSubmit}>
+                <Text className='text-center capitalize text-[25px] text-white' >{isClicked ? "Loading ...": "sign up"}</Text>
             </Pressable>
            
             </View>
         </View>
         <View className='items-center pb-[100px]'>
-            <View className='flex-row'>
+            <View className='flex-row items-center'>
              <Text className='text-[16px] capitalize'>already have an account?  </Text>
-             <Pressable>
-                <Text className='text-[#FFAB10] font-bold text-[16px]' onPress={signin}>Login</Text>
+             <Pressable className=' p-[10px]' onPress={signin}>
+                <Text className='text-[#FFAB10] font-bold text-[16px]' >Login</Text>
              </Pressable>
             </View>
         </View>
 
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };

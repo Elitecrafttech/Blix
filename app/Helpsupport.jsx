@@ -1,13 +1,20 @@
 import { View, Text, Dimensions, Pressable, ScrollView, Image} from 'react-native'
 import { useEffect, useState } from 'react'; 
 import Entypo from '@expo/vector-icons/Entypo';
+import { router, useNavigation } from 'expo-router';
 
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Helpsupport() {
+    const navigation = useNavigation();
 
+
+    const form = () =>{
+        // router.push('/Fillform')
+        navigation.navigate('Fillform');
+    }
 
 const [dimensions, setDimensions] = useState({
     window: windowDimensions,
@@ -46,7 +53,7 @@ const [dimensions, setDimensions] = useState({
                             <Entypo name="chevron-small-right" size={30} color="black" />
                         </Pressable>
                         <Text className='border-b-[0.3px] mb-[20px] border-b-gray-300'></Text>
-                        <Pressable className='flex-row items-center justify-between ' >
+                        <Pressable className='flex-row items-center justify-between ' onPress={form}>
                             <View className='flex-row gap-[15px]'>
                                 <View className='bg-slate-200 rounded-full p-[15px]'>
                                     <Image source={require('@/assets/images/form.png')} /></View>

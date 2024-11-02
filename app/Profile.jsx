@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, Pressable, Image, ScrollView, StyleSheet, } from 'react-native'
+import { View, Text, Dimensions, Pressable, Image, ScrollView, } from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
 import { router, useNavigation } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
@@ -13,23 +13,27 @@ const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Profile() {
+    const navigation = useNavigation();
 
-    const {userData, getUserDetails} = useContext(AppContext)
+    const {userData, getUserDetails, logout} = useContext(AppContext)
     
 
 
     const editinfo = () => {
-        router.push('Editinfo');
+        navigation.navigate('Editinfo');
     };
 
     const Accsecurity = () => {
-        router.push('Accountsecurity');
+        navigation.navigate('Accountsecurity');
     };
     const Helpsupport = () => {
-        router.push('Helpsupport');
+        navigation.navigate('Helpsupport');
     };
     const Legalpolicy = () => {
-        router.push('Legalpolicy');
+        navigation.navigate('Legalpolicy');
+    };
+    const Details = () => {
+        navigation.navigate('Profiledetails');
     };
 
 const [dimensions, setDimensions] = useState({
@@ -58,8 +62,7 @@ const [dimensions, setDimensions] = useState({
          <ScrollView>
           <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
             <View style={{gap: 30}}>
-                <View className='gap-[20px]'>
-                    {/* <Text className='font-medium text-[28px] capitalize self-center'>profile</Text> */}
+                <Pressable className='gap-[20px]' onPress={Details}>
                     <View className='flex-row gap-[20px] items-center'>
                         <Image source={require('@/assets/images/profile.png')}/>
                         <View>
@@ -67,7 +70,7 @@ const [dimensions, setDimensions] = useState({
                             <Text className='text-[16px]'>{userData?.wallet?.user.email}</Text>
                         </View>
                     </View>
-                </View>
+                </Pressable>
                 <View className='gap-[20px]'>
                     <View className='border-[1px] border-[#eaebeb] rounded-xl gap-[10px] px-[10px] py-[20px]'>
                         <Pressable className='flex-row items-center justify-between' onPress={editinfo}>
@@ -95,17 +98,7 @@ const [dimensions, setDimensions] = useState({
 
 
                     <View className='border-[1px] border-[#eaebeb] rounded-xl gap-[10px] px-[10px] py-[20px]'>
-                        <Pressable className='flex-row items-center justify-between'>
-                            <View className='flex-row gap-[15px]'>
-                                <View className='bg-slate-200 rounded-full p-[10px]'><Feather name="settings" size={24} color="black" /></View>
-                                <View>
-                                    <Text className='font-semibold capitalize text-[16px]'>settings</Text>
-                                    <Text className='capitalize'>account, notification</Text>
-                                </View>
-                            </View>
-                            <Entypo name="chevron-small-right" size={30} color="black" />
-                        </Pressable>
-                        <Text className='border-b-[0.3px] mb-[20px] border-b-gray-300'></Text>
+                        
                         <Pressable className='flex-row items-center justify-between ' onPress={ Helpsupport}>
                             <View className='flex-row gap-[15px]'>
                                 <View className='bg-slate-200 rounded-full p-[10px]'><Feather name="help-circle" size={28} color="black" /></View>
@@ -130,7 +123,7 @@ const [dimensions, setDimensions] = useState({
                     </View>
 
 
-                    <Pressable className='flex-row items-center justify-between border-[1px] border-[#eaebeb] rounded-xl gap-[10px] px-[10px] py-[20px]'>
+                    <Pressable className='flex-row items-center justify-between border-[1px] border-[#eaebeb] rounded-xl gap-[10px] px-[10px] py-[20px]' onPress={()=>{logout()}}>
                             <View className='flex-row gap-[15px] items-center'>
                                 <View className='bg-slate-200 rounded-full p-[10px]'><Lock name="logout" size={24} color="black" /></View>
                                     <Text className='font-semibold capitalize text-[20px]'>log out</Text>

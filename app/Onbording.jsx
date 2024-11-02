@@ -1,17 +1,22 @@
 import { useEffect, useState } from 'react'; 
 import { router, useNavigation } from 'expo-router';
 import { View, Text, Image, Pressable, Dimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Status from '@/components/Status';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Onboarding() {
+  const navigation = useNavigation();
 
     const handleSignin = () => {
-        router.push('/Signin');
+        // router.push('/Signin');
+        navigation.navigate('Signin');
     }
     const handleRegister = () => {
-        router.push('/Register');
+        // router.push('/Register');
+        navigation.navigate('Register');
     }
 
 
@@ -35,7 +40,9 @@ export default function Onboarding() {
   
   
     return (
-      <View className='flex-[1] items-center justify-center'>
+      <View className='flex-[1] items-center justify-center bg-white'>
+        <SafeAreaView>
+          <Status />
         <View style={{height: dimensions.screen}}>
         <View style={{alignItems: "center", padding: windowWidth * 0.05}}>
           <Image source={require('@/assets/images/onboarding.png')} />
@@ -49,11 +56,12 @@ export default function Onboarding() {
           </View>
         </View>
           <Pressable className='items-center flex-row justify-center gap-[40px]' style={{marginTop: windowHeight * 0.05}}>
-            <Text className='bg-[#F6F8FE] border-[1px] border-[#FFAB10] text-[#FFAB10] text-[16px] p-[12px] rounded-[18px] text-center' style={{width: windowWidth * 0.35}} onPress={handleSignin}>Sign In</Text>
+            <Text className='border-[1px] border-[#FFAB10] text-[#FFAB10] text-[16px] p-[12px] rounded-[18px] text-center bg-[white]' style={{width: windowWidth * 0.35}} onPress={handleSignin}>Sign In</Text>
   
             <Text className='bg-[#FFAB10] text-[white] text-[16px] p-[12px] rounded-[18px] text-center' style={{width: windowWidth * 0.35}} onPress={handleRegister}>Register</Text>
           </Pressable>
       </View>
+      </SafeAreaView>
       </View>
     );
   };

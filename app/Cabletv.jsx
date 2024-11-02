@@ -2,6 +2,7 @@ import { View, Text, Dimensions, Pressable, ScrollView} from 'react-native'
 import { useEffect, useState } from 'react'; 
 import {Picker} from '@react-native-picker/picker';
 import { TextInput } from 'react-native-gesture-handler';
+import { router, useNavigation } from 'expo-router';
 
 
 
@@ -9,6 +10,8 @@ const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Cabletv() {
+    const navigation = useNavigation();
+
     const [ provider, setProvider] = useState('');
     const [ plan, setPlan] = useState('');
     const [ decoder, setDecoder] = useState('');
@@ -32,12 +35,15 @@ const [dimensions, setDimensions] = useState({
     const windowWidth = dimensions.window.width;
     const windowHeight = dimensions.window.height;
 
+    const checkout = ()=>{
+        // router.push('Cablecheckout');
+        navigation.navigate('Cablecheckout');
+    }
+
   return (
-         <ScrollView className='w-[100%] py-[50px] bg-white' style={{width: windowWidth, height: windowHeight - 60}}>
+         <ScrollView className='w-[100%] py-[20px] bg-white' style={{width: windowWidth, height: windowHeight - 60}}>
           <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
-                <View className='gap-[20px]'>
-                   <Text className='capitalize text-center font-bold text-[25px] '>Cable TV</Text>
-                
+                <View className='gap-[20px]'>                
                     <View className=' gap-[50px] px-[10px] py-[20px]'>
                     
                         <View className=' gap-[50px]'>
@@ -91,7 +97,7 @@ const [dimensions, setDimensions] = useState({
                         </View>                     
                     </View>
                     <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]'>
-                     <Text className='text-center capitalize text-[20px] text-white'>Continue</Text>
+                     <Text className='text-center capitalize text-[20px] text-white' onPress={checkout}>Continue</Text>
                     </Pressable>
                 </View>
                 

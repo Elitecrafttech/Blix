@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { createContext } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
+import ToastManager, { Toast } from 'toastify-react-native';
 export const AppContext = createContext();
 
 export function AppContextProvider({ children }) {
@@ -32,26 +34,33 @@ export function AppContextProvider({ children }) {
 
     const [user, setUser] = useState(()=>{
       const token = AsyncStorage.getItem("tk");      
-      return token.token ? JSON.parse(token.token) : null;
+      return token.token ? token : null;
     })
 
     const tk = JSON.parse(user)
-    console.log("token ",tk);
+    // console.log("token ",tk);
     const [userData, setUserData] = useState({});
+  const [transaction, setTransaction] = useState([])
+  
+
     const getUserDetails = async()=>{
+      // console.log("user's token is " + tk.token);
+      // console.log("user's tokens is " + tk);
+      
       const userd = await fetch('https://instant-chain.onrender.com/dashboard', {
           headers: {
-              'Authorization': `Bearer ${tk.token}`,
+              'Authorization': `Bearer ${tk}`,
               "content-type":"application/json" 
           }
       });
       if(userd.ok){
           const data = await userd.json();
           setUserData(data)
-          console.log(data);
+          setTransaction(data.transactions)
+          // console.log(transaction);
+          
           // console.log(data);
 
-          // setUser(data);
       }else{
           const data = await userd.json();
           console.log(data);
@@ -59,6 +68,12 @@ export function AppContextProvider({ children }) {
       }
   }
 
+const logout = async()=>{
+  await AsyncStorage.removeItem("tk")
+  setIsAuthenticated(false);
+  setUser(null);
+  router.push('Signin');
+}
 
    useEffect(() => {
     if(user){
@@ -66,18 +81,18 @@ export function AppContextProvider({ children }) {
       setUser(JSON.stringify(user))
       console.log("user's token", user);
       setIsAuthenticated(true);
-    }else{
-      console.log("No token");
-      
+      getUserDetails()
+    }else{  
       AsyncStorage.removeItem("tk")
       setIsAuthenticated(false);
+      // router.push('Signin');
     }
    }, [])
    
 
 
   return (
-    <AppContext.Provider value={{isAuthenticated, setIsAuthenticated, changeColor, bgColor, textColor, user, setUser, userData, setUserData, getUserDetails}} >
+    <AppContext.Provider value={{isAuthenticated, logout, setIsAuthenticated, changeColor, bgColor, textColor, user, setUser, userData, setUserData, getUserDetails, transaction }} >
         {children}
     </AppContext.Provider>
   );

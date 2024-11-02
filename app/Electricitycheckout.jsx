@@ -1,11 +1,13 @@
 import { View, Text, Dimensions, Pressable, ScrollView} from 'react-native'
 import { useEffect, useState } from 'react';
+import { router, useNavigation } from 'expo-router';
 
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Electricitycheckout() {
+    const navigation = useNavigation();
 
 const [dimensions, setDimensions] = useState({
     window: windowDimensions,
@@ -25,12 +27,15 @@ const [dimensions, setDimensions] = useState({
     const windowWidth = dimensions.window.width;
     const windowHeight = dimensions.window.height;
 
+    const status = ()=> {
+        // router.push('Electricitystatus');
+        navigation.navigate('Electricitystatus');
+    }
+
   return (
          <ScrollView className='w-[100%] py-[50px] bg-white' style={{width: windowWidth, height: windowHeight - 60}}>
           <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
-                <View className='gap-[50px]'>
-                   <Text className='capitalize text-center font-semibold text-[25px] '>electricity</Text>
-                
+                <View className='gap-[50px]'>                
                     <View className=' gap-[100px] px-[10px] py-[20px]'>
                     
                         <View className='items-center gap-[10px]'>
@@ -60,7 +65,7 @@ const [dimensions, setDimensions] = useState({
                         </View>                     
                     </View>
                     <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]'>
-                     <Text className='text-center capitalize text-[20px] text-white'>pay now</Text>
+                     <Text className='text-center capitalize text-[20px] text-white' onPress={status}>pay now</Text>
                     </Pressable>
                 </View>
                 
