@@ -62,8 +62,8 @@ export default function Bottombar() {
             <FontAwesome5 name="money-check-alt" size={24} color="black" />
                 <Text>trade p2p</Text>
             </TouchableOpacity>
-            <TouchableOpacity className='items-center p-[10px]'>
-            <MaterialIcons name="payment" size={24} color="black" onPress={trx}/>
+            <TouchableOpacity className='items-center p-[10px]' onPress={trx}>
+            <MaterialIcons name="payment" size={24} color="black" />
                 <Text>Transaction</Text>
             </TouchableOpacity>
             <TouchableOpacity className='items-center p-[10px]' onPress={profile}>

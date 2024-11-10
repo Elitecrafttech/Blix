@@ -35,6 +35,9 @@ export default function Profile() {
     const Details = () => {
         navigation.navigate('Profiledetails');
     };
+    const mytrade = () => {
+        navigation.navigate('Mytradelist');
+    };
 
 const [dimensions, setDimensions] = useState({
     window: windowDimensions,
@@ -60,7 +63,7 @@ const [dimensions, setDimensions] = useState({
   return (
     <View className='flex-[1] justify-center' style={{width: windowWidth, height: windowHeight - 60}}>
          <ScrollView>
-          <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
+          <View className='pb-[80px]' style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
             <View style={{gap: 30}}>
                 <Pressable className='gap-[20px]' onPress={Details}>
                     <View className='flex-row gap-[20px] items-center'>
@@ -116,6 +119,17 @@ const [dimensions, setDimensions] = useState({
                                 <View>
                                     <Text className='font-semibold capitalize text-[16px]'>legal policy</Text>
                                     <Text className='capitalize'>privacy & policy, terms & conditions</Text>
+                                </View>
+                            </View>
+                            <Entypo name="chevron-small-right" size={30} color="black" />
+                        </Pressable>
+                        <Text className='border-b-[0.3px] mb-[20px] border-b-gray-300'></Text>
+                        <Pressable className='flex-row items-center justify-between ' onPress={mytrade}>
+                            <View className='flex-row gap-[15px]'>
+                                <View className='bg-slate-200 rounded-full p-[10px]'><MaterialIcons name="preview" size={24} color="black" /></View>
+                                <View>
+                                    <Text className='font-semibold capitalize text-[16px]'>my trade list</Text>
+                                    <Text className='capitalize'>preview all your listed trade</Text>
                                 </View>
                             </View>
                             <Entypo name="chevron-small-right" size={30} color="black" />

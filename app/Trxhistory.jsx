@@ -40,7 +40,7 @@ const [dimensions, setDimensions] = useState({
               transaction.length > 0 ? transaction.map((t, index) => (
                 <View className='gap-5 py-[15px]' key={index}>
 
-                <View className='flex-row gap-[30px] w-full items-center'>
+                <View className='flex-row w-full items-center'>
                   <View className='rounded-full border border-gray-300 p-[5px]'>
                     <Feather name={t.transType === "airtime" || t.transType === "data" ? "phone" : "activity"} size={10} color="black" />
                   </View>

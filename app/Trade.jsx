@@ -55,7 +55,7 @@ const [dimensions, setDimensions] = useState({
                                 </View>
                                 <View>
                                     <Text className='font-semibold capitalize text-[18px]'>list trade</Text>
-                                    <Text className='capitalize'>allow you to list crypto/paypal/payonerr</Text>
+                                    <Text className='capitalize w-[63vw]'>allow you to list crypto/paypal/payonerr</Text>
                                 </View>
                             </View>
                             <Entypo name="chevron-small-right" size={30} color="black" />
@@ -70,7 +70,7 @@ const [dimensions, setDimensions] = useState({
                                 </View>
                                 <View>
                                     <Text className='font-semibold capitalize text-[18px]'>purchase trade</Text>
-                                    <Text className='capitalize'>allow you to buy crypto/paypal/payonerr</Text>
+                                    <Text className='capitalize w-[60vw]'>allow you to buy crypto/paypal/payonerr</Text>
                                 </View>
                             </View>
                             <Entypo name="chevron-small-right" size={30} color="black" />

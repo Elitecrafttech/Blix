@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext, useCallback} from 'react';
 import { router, useNavigation } from 'expo-router';
-import { View, Text, Image, Pressable, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Pressable, Dimensions, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -10,6 +9,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { AppContext } from '../context/AppContext';
 import Bottombar from './Bottombar';
+import Preloader from './Preloader';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
@@ -17,8 +17,18 @@ const screenDimensions = Dimensions.get('screen');
 export default function Dashboard() {
   const navigation = useNavigation();
 
-  const {userData, getUserDetails, transaction} = useContext(AppContext)
+  const {userData, getUserDetails, transaction, isLoading} = useContext(AppContext)
   const [display, setDisplay] = useState(false)
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    // Simulate a network request or data fetch
+    setTimeout(() => {
+      setRefreshing(false);
+      // Add your data fetching logic here, e.g., API call
+    }, 2000); // Simulated delay
+  }, []);
 
 
     const airtime = () => {
@@ -28,7 +38,7 @@ export default function Dashboard() {
       navigation.navigate('Databundle');
   };
     const cable = () => {
-      navigation.navigate('Cabletv');
+      navigation.navigate('Cabletype');
   };
     const Electricity = () => {
       navigation.navigate('Electricity');
@@ -78,7 +88,15 @@ export default function Dashboard() {
 
   return (
     <View className='flex-[1] justify-center mt-10' style={{width: windowWidth, height: windowHeight - 60}}>
-      <ScrollView className='w-[100%] gap-3 flex-col bg-white p-[30px]'>
+      {isLoading ? (
+          <Preloader />
+        ) : (
+          // <Text>Your Dashboard Content</Text>
+        
+      <ScrollView className='w-[100%] gap-3 flex-col bg-white p-[30px]' contentContainerStyle={{ paddingBottom: 60 }} refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+        
             <View className='flex-row w-[100%] justify-between items-center'>
                 <Pressable className='flex-row gap-2 items-center justify-center h-[35px] '  onPress={profile}>
                   <Image source={require('@/assets/images/profile.png')} style={{height: 25, width: 25}}/>
@@ -153,7 +171,7 @@ export default function Dashboard() {
               transaction.length > 0 ? transaction.slice(0, 4).map((t, index) => (
                 <View className='gap-5 py-[15px]' key={index}>
 
-                <View className='flex-row gap-[30px] w-full items-center'>
+                <View className='flex-row w-full items-center'>
                   <View className='rounded-full border border-gray-300 p-[5px]'>
                     <Feather name={t.transType === "airtime" || t.transType === "data" ? "phone" : "activity"} size={10} color="black" />
                   </View>
@@ -175,9 +193,11 @@ export default function Dashboard() {
                  <Text className='text-[17px] font-bold'>No Transaction Made</Text>
               </View>
             }
-
       </ScrollView>
-      <Bottombar />
+      )}
+      <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+        <Bottombar />
+      </View>
     </View>
   );
 }

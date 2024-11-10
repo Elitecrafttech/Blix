@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, TouchableOpacity, Pressable, ScrollView, } from 'react-native'
+import { View, Text, Dimensions, TouchableOpacity, Pressable, ScrollView, ActivityIndicator} from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
 import { router, useNavigation } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
@@ -6,6 +6,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Octicons from '@expo/vector-icons/Octicons';
 import { AppContext } from '../context/AppContext';
 import Bottombar from './Bottombar';
+import Preloader from './Preloader';
 
 
 const windowDimensions = Dimensions.get('window');
@@ -14,14 +15,14 @@ const screenDimensions = Dimensions.get('screen');
 export default function Wallet() {
   const navigation = useNavigation();
 
-    const {userData, getUserDetails, transaction} = useContext(AppContext)
+    const {userData, getUserDetails, transaction, isLoading} = useContext(AppContext)
     const [display, setDisplay] = useState(true)
 
 
 
     const payment = () => {
         // router.push('Payment');
-        navigation.navigate('payment');
+        navigation.navigate('Payment');
     };
     const trx = () => {
         // router.push('/Trxhistory');
@@ -54,7 +55,10 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
   return (
-    <View className='flex-[1]' style={{width: windowWidth, height: windowHeight - 60}}>
+    <>
+    {
+      isLoading ? <Preloader /> : (
+        <View className='flex-[1]' style={{width: windowWidth, height: windowHeight - 60}}>
         <ScrollView className=' bg-white'>
         <View style={{paddingLeft: windowWidth * 0.05, paddingRight: windowWidth * 0.05, paddingBottom: windowWidth * 0.35, height: dimensions.screen}}>
           <View>
@@ -73,7 +77,7 @@ const [dimensions, setDimensions] = useState({
                 </View>
 
               </View>
-                <View className='flex-row items-center justify-center gap-[50px]'>
+                <View className='flex-row items-center justify-center gap-[20px]'>
                   <TouchableOpacity className='flex-row mt-[30px] justify-center gap-[15px] rounded-[10px] items-center py-[10px] px-[10px] bg-[#FFAB10]'>
                       <Octicons name="desktop-download" size={20} color="white" />
                       <Text className='text-[17px] text-white font-bold capitalize' onPress={fund}>withdraw fund </Text>
@@ -93,12 +97,12 @@ const [dimensions, setDimensions] = useState({
                 transaction.length > 0 ? transaction.slice(0, 8).map((t, index) => (
                   <View className='gap-5 py-[15px]' key={index}>
 
-                  <View className='flex-row gap-[30px] w-full items-center'>
+                  <View className='flex-row w-full items-center'>
                     <View className='rounded-full border border-gray-300 p-[5px]'>
                       <Feather name={t.transType === "airtime" || t.transType === "data" ? "phone" : "activity"} size={10} color="black" />
                     </View>
 
-                    <View className='flex-grow  items-center gap-[20px]'>
+                    <View className='flex-grow  items-center'>
                       <View className='gap-2'>
                         <Text className='text-[20px] font-bold text-[#292828]'>{t.title}</Text>
                         <Text className='text-[#0000005C] text-[13px]'>{t.description}</Text>
@@ -121,6 +125,9 @@ const [dimensions, setDimensions] = useState({
       </ScrollView>
       <Bottombar />
     </View>
+      )
+    }
+    </>
   );
 };
 

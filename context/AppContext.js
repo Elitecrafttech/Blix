@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { createContext } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import ToastManager, { Toast } from 'toastify-react-native';
 export const AppContext = createContext();
 
 export function AppContextProvider({ children }) {
+  const navigation = useNavigation();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
 
     const [bgColor, setBgColor] = useState(()=>{
       const bg = AsyncStorage.getItem('bgColor');
@@ -38,7 +41,7 @@ export function AppContextProvider({ children }) {
     })
 
     const tk = JSON.parse(user)
-    // console.log("token ",tk);
+    console.log("token ",tk);
     const [userData, setUserData] = useState({});
   const [transaction, setTransaction] = useState([])
   
@@ -57,6 +60,7 @@ export function AppContextProvider({ children }) {
           const data = await userd.json();
           setUserData(data)
           setTransaction(data.transactions)
+          setIsLoading(false)
           // console.log(transaction);
           
           // console.log(data);
@@ -64,6 +68,7 @@ export function AppContextProvider({ children }) {
       }else{
           const data = await userd.json();
           console.log(data);
+          setIsLoading(false)
           
       }
   }
@@ -72,7 +77,9 @@ const logout = async()=>{
   await AsyncStorage.removeItem("tk")
   setIsAuthenticated(false);
   setUser(null);
-  router.push('Signin');
+  // router.push('Signin');
+  navigation.navigate('Signin');
+  navigation.reset({routes:[{name: 'Signin'}]})
 }
 
    useEffect(() => {
@@ -92,7 +99,7 @@ const logout = async()=>{
 
 
   return (
-    <AppContext.Provider value={{isAuthenticated, logout, setIsAuthenticated, changeColor, bgColor, textColor, user, setUser, userData, setUserData, getUserDetails, transaction }} >
+    <AppContext.Provider value={{isAuthenticated, logout, setIsAuthenticated, changeColor, bgColor, textColor, user, setUser, userData, setUserData, getUserDetails, transaction, isLoading }} >
         {children}
     </AppContext.Provider>
   );

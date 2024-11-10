@@ -1,4 +1,5 @@
-import { View, Text, Dimensions, TextInput, Pressable, Image, ScrollView, StyleSheet, SafeAreaView } from 'react-native'
+import { View, Text, Dimensions, TextInput, Pressable, ScrollView,SafeAreaView, ActivityIndicator } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useEffect, useState, useContext } from 'react'; 
 import { router, useNavigation } from 'expo-router';
 import Eye from '@expo/vector-icons/Feather'
@@ -20,6 +21,7 @@ export default function Signin() {
     const [password, setPassword] = useState('');
     const [showpassword, setShowPassword] = useState(false);
     const [Loading, setLoading] = useState(false);
+
    
 
     const handleSubmit = async() => {
@@ -55,8 +57,8 @@ export default function Signin() {
             // console.log(message.token);
             
             Toast.success(message.message);
-            // router.push('/dashboard');
             navigation.navigate('dashboard');
+            navigation.reset({routes:[{name: 'dashboard'}]})
         }else{
             setLoading(false);
             const error = await response.json();
@@ -73,11 +75,9 @@ export default function Signin() {
 
 
     const signUp = () => {
-        // router.push('/Register');
         navigation.navigate('Register');
     }
     const forgetpass = () => {
-        // router.push('/Forgetpassword');
         navigation.navigate('Forgetpassword');
     }
 
@@ -87,6 +87,7 @@ const [dimensions, setDimensions] = useState({
     });
 
     useEffect(() => {
+
     const subscription = Dimensions.addEventListener(
         'change',
         ({ window, screen }) => {
@@ -101,7 +102,23 @@ const [dimensions, setDimensions] = useState({
 
   return (
     <ScrollView className='w-[100%] py-[50px] pt-[100px] bg-white'>
-    <SafeAreaView>
+        <SafeAreaProvider>
+        <SafeAreaView>
+          {Loading && (
+            <View style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              zIndex: 10
+            }}>
+              <ActivityIndicator size="large" color="#00ff00" />
+            </View>
+          )}
     <Status/>
       <ToastManager width={300} textStyle={{fontSize:17}} />
       <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
@@ -147,6 +164,7 @@ const [dimensions, setDimensions] = useState({
         </View>
     </View>
     </SafeAreaView>
+    </SafeAreaProvider>
     </ScrollView>
   );
 };

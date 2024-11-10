@@ -48,7 +48,7 @@ export default function Listtrade() {
             const data = await response.json();
             console.log(data);
             Toast.success('Trade request sent successfully');
-            // navigation.navigate('Orderstransaction');
+            navigation.navigate('Mytradelist');
         }else{
             setLoading(false);
             const error = await response.json();

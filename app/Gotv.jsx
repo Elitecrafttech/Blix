@@ -9,7 +9,7 @@ import { router, useNavigation } from 'expo-router';
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
-export default function Cabletv() {
+export default function Gotv() {
     const navigation = useNavigation();
 
     const [ provider, setProvider] = useState('');
