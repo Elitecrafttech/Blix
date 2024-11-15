@@ -92,7 +92,7 @@ const logout = async()=>{
     }else{  
       AsyncStorage.removeItem("tk")
       setIsAuthenticated(false);
-      // router.push('Signin');
+      router.push('Signin');
     }
    }, [])
    

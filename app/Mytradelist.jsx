@@ -62,7 +62,7 @@ export default function Mytradelist() {
                                 <Text>{data.quantity}</Text>
                                 </View>
                                 <View>
-                                 <Text className='border-[#FFAB10] border-[2px] p-[10px] text-center rounded-xl text-[#b6852a] w-[25vw] text-[17px]' >{data.type}</Text>
+                                 <Text className='border-[#FFAB10] border-[2px] p-[10px] text-center rounded-xl text-[#b6852a] w-[30vw] text-[17px]' >{data.type}</Text>
                                 </View>
                             </View>  
                         ))}

@@ -4,6 +4,6 @@ import Onboarding  from '../Onbording';
 import Dashboard from '../dashboard';
 
 export default function index() {
-  const {isAuthenticated} = useContext(AppContext);
+  const {isAuthenticated} = useContext(AppContext);  
   return isAuthenticated ? <Dashboard/> : <Onboarding />;
 }

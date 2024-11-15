@@ -43,9 +43,6 @@ export default function Dashboard() {
     const Electricity = () => {
       navigation.navigate('Electricity');
   };
-    const peer = () => {
-      navigation.navigate('PeerToPeer');
-  };
     const payment = () => {
       navigation.navigate('Payment');
   };
@@ -135,7 +132,7 @@ export default function Dashboard() {
             <View className='w-[100%] flex-row mt-[35px] justify-around items-center'>
               <Text className='text-[18px] border-b-[2px] border-[#FFAB10] text-[#FFAB10] pb-[10px] font-bold'>Service</Text>
               <TouchableOpacity>
-              <Text className='text-[18px] text-black font-bold p-[10px]' onPress={peer}>p2p Trxn</Text>
+              <Text className='text-[18px] text-black font-bold p-[10px]' onPress={trxn}>p2p Trxn</Text>
               </TouchableOpacity>
             </View>
             <View className='flex-row mt-[45px] justify-between items-center'>

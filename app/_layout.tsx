@@ -2,19 +2,21 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import 'react-native-reanimated';
 import { GestureHandlerRootView} from 'react-native-gesture-handler'
 import "../global.css"
 
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { AppContextProvider } from '../context/AppContext';
+import { AppContextProvider, AppContext } from '../context/AppContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  // const {isAuthenticated} = useContext(AppContext)
+
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -40,6 +42,11 @@ export default function RootLayout() {
       <Stack.Screen name="Register" options={{ headerShown: false }} />
       <Stack.Screen name="Airtimestatus" options={{ headerShown: false }} />
       <Stack.Screen name="Datastatus" options={{ headerShown: false }} />
+      <Stack.Screen name="Editinfo" options={{ headerShown: false }} />
+      <Stack.Screen name="Accountsecurity" options={{ headerShown: false }} />
+      <Stack.Screen name="Helpsupport" options={{ headerShown: false }} />
+      <Stack.Screen name="Legalpolicy" options={{ headerShown: false, title:"Legal Policy"}} />
+      <Stack.Screen name="singleTrade" options={{ headerShown: false, title:"Trade" }} />
       </Stack>
     </AppContextProvider>
     </GestureHandlerRootView>

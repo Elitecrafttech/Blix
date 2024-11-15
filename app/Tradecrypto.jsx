@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, TouchableOpacity, ScrollView,} from 'react-native'
+import { View, Text, Dimensions, TouchableOpacity, ScrollView, FlatList} from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
 import { router, useNavigation} from 'expo-router';
 import { AppContext } from '@/context/AppContext';
@@ -7,34 +7,14 @@ import { AppContext } from '@/context/AppContext';
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
-const Trade = [
-    {
-        id: 1,
-        username: "user 1",
-        amount: "#1000",
-        quantity: "$100 - $500",
-        button: "Buy"
-    },
-    {
-        id: 2,
-        username: "user 2",
-        amount: "#1000",
-        quantity: "$100 - $500",
-        button: "Buy"
-    },
-    {
-        id: 3,
-        username: "user 3",
-        amount: "#1000",
-        quantity: "$100 - $500",
-        button: "Buy"
-    },
-]
+
 export default function Tradecrypto() {
     const navigation = useNavigation();
 
     const { user } = useContext(AppContext);
     const tk = JSON.parse(user)
+
+    const [trades, setTrades] = useState([])
 
 
     const fetcTrade = async()=>{
@@ -46,8 +26,9 @@ export default function Tradecrypto() {
             }
         })
         if(response.ok){
-            const responseData =  await response.json();
-            console.log(responseData);
+            const Data =  await response.json();
+            console.log(Data.trades);
+            setTrades(Data.trades)
             
 
         }else{
@@ -57,7 +38,7 @@ export default function Tradecrypto() {
     }
 
     const crypto = () =>{
-        navigation.navigate('Cryptodetails');
+        navigation.navigate('singleTrade');
     }
 
     const [dimensions, setDimensions] = useState({
@@ -82,25 +63,56 @@ export default function Tradecrypto() {
         const windowHeight = dimensions.window.height;
 
   return (
-    <ScrollView className='w-[100%] py-[50px] bg-white'  style={{width: windowWidth, height: windowHeight - 60}}>
+    <View className='w-[100%] py-[50px] bg-white'  style={{width: windowWidth, height: windowHeight - 60}}>
           <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
                 <View className='gap-[20px]'>
                     <View className='gap-[30px]'>
-                        {Trade.map((data, index)=>(
+                        {/* {trades.map((data, index)=>(
                             <View className='flex-row items-center justify-between' key={index}>
                                 <View className='gap-[5px]'>
-                                <Text className='text-[18px]'>{data.username}</Text>
-                                <Text className='text-[25px]'>{data.amount}</Text>
-                                <Text>{data.quantity}</Text>
+                                <Text className='text-[18px]'>user:
+                                    {data.user}
+                                    </Text>
+                                <Text className='text-[25px]'>price {data.price}</Text>
+                                <Text>quantity {data.quantity}</Text>
+                                <Text>tradeType {data.tradeType}</Text>
+                                <Text>ID {data._id}</Text>
                                 </View>
                                 <TouchableOpacity>
-                                 <Text className='border-[#FFAB10] border-[2px] p-[10px] text-center rounded-xl text-[#b6852a] w-[20vw] text-[17px]' onPress={crypto}>{data.button}</Text>
+                                 <Text className='border-[#FFAB10] border-[2px] p-[10px] text-center rounded-xl text-[#b6852a] w-[20vw] text-[17px]' onPress={crypto}>Buy</Text>
                                 </TouchableOpacity>
                             </View>  
-                        ))}
+                        ))} */}
+
+                   
+                            <FlatList
+                            
+                            data={trades}
+                            keyExtractor={item => item._id}
+                            renderItem={({item}) => (
+                                <TouchableOpacity onPress={()=>navigation.navigate("singleTrade", {id: item._id})} cl >
+                                    <View className='flex-row items-center justify-between' key={item._id}>
+                                <View className='gap-[5px]'>
+                                <Text className='text-[18px]'>user:
+                                    {item.user}
+                                    </Text>
+                                <Text className='text-[25px]'>price {item.price}</Text>
+                                <Text>quantity {item.quantity}</Text>
+                                <Text>tradeType {item.tradeType}</Text>
+                                <Text>ID {item._id}</Text>
+                                </View>
+                                
+                            </View> 
+
+                             </TouchableOpacity>
+                        )}
+
+                                        
+                            />
+                        
                     </View>   
                 </View>
           </View>
-        </ScrollView>
+        </View>
   )
 }

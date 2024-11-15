@@ -111,7 +111,7 @@ const [dimensions, setDimensions] = useState({
 
                             <View className='gap-[15px]'>
                                 <Text className='capitalize text-[18px] font-medium'>tradeType</Text>
-                                <View className='border-[#eaebeb] border-[1px] rounded-xl'>
+                                <View className='border-[#9ab8b8] border-[1px] rounded-xl'>
                                     <Picker
                                     selectedValue={tradetype}
                                     onValueChange={(itemValue) => setTradetype(itemValue)}

@@ -1,65 +1,67 @@
 import { View, Text, Dimensions, Pressable, ScrollView, TouchableOpacity} from 'react-native'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { router } from 'expo-router';
+import { AppContext } from '@/context/AppContext';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 
-const History = [
+
+const Trade = [
     {
         id: 1,
-        Type: "type",
-        Crypto: "crypto",
-        Status: "status",
-        State: "completed",
-        Price: "price",
-        PriceNum: "#1,000,000",
-        Amount: "purchase amount",
-        AmountNum: "$600",
-        Fee: "transaction fee",
-        FeeNum: "#50",
-        Order: "Order ID",
-        OrderNum: "#1234567890",
-    
+        username: "user 1",
+        amount: "#1000",
+        quantity: "$100 - $500",
+        Type: "crypto",
+        button: "Buy"
     },
     {
         id: 2,
-        Type: "type",
-        Crypto: "paypal",
-        Status: "status",
-        State: "completed",
-        Price: "price",
-        PriceNum: "#1,000,000",
-        Amount: "purchase amount",
-        AmountNum: "$600",
-        Fee: "transaction fee",
-        FeeNum: "#50",
-        Order: "Order ID",
-        OrderNum: "#1234567890",
-    
+        username: "user 2",
+        amount: "#1000",
+        quantity: "$100 - $500",
+        Type: "payoneer",
+        button: "Buy"
     },
     {
         id: 3,
-        Type: "type",
-        Crypto: "payonerr",
-        Status: "status",
-        State: "completed",
-        Price: "price",
-        PriceNum: "#1,000,000",
-        Amount: "purchase amount",
-        AmountNum: "$600",
-        Fee: "transaction fee",
-        FeeNum: "#50",
-        Order: "Order ID",
-        OrderNum: "#1234567890",
-    
+        username: "user 3",
+        amount: "#1000",
+        quantity: "$100 - $500",
+        Type: "paypal",
+        button: "Buy"
     },
-
-    
 ]
 
 export default function Orderstransaction() {
+
+    // const { user } = useContext(AppContext);
+    // const tk = JSON.parse(user)
+
+    // const [trades, setTrades] = useState([])
+
+
+    // const fetcTrade = async()=>{
+    //     const response = await fetch("https://instant-chain.onrender.com/api/v1/trades/trades", {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${tk}`
+    //         }
+    //     })
+    //     if(response.ok){
+    //         const Data =  await response.json();
+    //         console.log(Data.trades);
+    //         setTrades(Data.trades)
+            
+
+    //     }else{
+    //         const error = await response.json();
+    //         console.log(error);
+    //     }
+    // }
 
 const [dimensions, setDimensions] = useState({
     window: windowDimensions,
@@ -67,6 +69,7 @@ const [dimensions, setDimensions] = useState({
     });
 
     useEffect(() => {
+        // fetcTrade()
     const subscription = Dimensions.addEventListener(
         'change',
         ({ window, screen }) => {
@@ -95,34 +98,33 @@ const [dimensions, setDimensions] = useState({
                 {/* <Text className='border-b-[0.3px] mb-[20px] border-b-gray-300'></Text> */}
                 </View>
                 <View className='gap-[30px]'>
-                {History.map((item) => (
-                    <View key={item.id} className='gap-[8px] p-[10px] rounded-xl' style={{backgroundColor: "#F2F3F5"}}>
-                    <View className='flex-row justify-between'>
-                        <Text className='capitalize text-[16px] font-medium'>{item.Type}</Text>
-                        <Text className='capitalize text-[16px] '>{item.Crypto}</Text>
-                    </View>
-                    <View>
-                    <View className='flex-row justify-between'>
-                        <Text className='capitalize text-[16px]'>{item.Status}</Text>
-                        <Text className='text-[16px] capitalize' style={{color: "#007C00"}}>{item.State}</Text>
-                    </View>
-                    <View className='flex-row justify-between'>
-                        <Text className='text-[16px] capitalize'>{item.Price}</Text>
-                        <Text className='text-[16px] font-bold'>{item.PriceNum}</Text>
-                    </View>
-                    <View className='flex-row justify-between'>
-                        <Text className='text-[16px] capitalize'>{item. Amount}</Text>
-                        <Text className='text-[16px] capitalize'>{item.AmountNum}</Text>
-                    </View>
-                    <View className='flex-row justify-between'>
-                        <Text className='text-[16px] capitalize'>{item. Fee}</Text>
-                        <Text className='text-[16px] capitalize'>{item.FeeNum}</Text>
-                    </View>
-                    <View className='flex-row justify-between'>
-                        <Text className='text-[16px] capitalize'>{item. Order}</Text>
-                        <Text className='text-[16px] capitalize'>{item.OrderNum}</Text>
-                    </View>
-                    </View>
+                {Trade.map((item) => (
+                    <View key={item.id} className='gap-[10px] p-[10px] rounded-xl' style={{backgroundColor: "#F2F3F5"}}>
+                        <View className='flex-row justify-between py-[10px]'>
+                            <Text className='capitalize text-[16px] font-medium'>buy {item.Type}</Text>
+                            <Text className='capitalize text-[16px] '>{item.status}</Text>
+                        </View>
+                        <View className='border-b-[1px] mb-[20px] border-[gray]'></View>
+
+                        <View className='gap-[15px]'>
+                            
+                            <View className='flex-row justify-between'>
+                                <Text className='text-[16px] capitalize'>Price</Text>
+                                <Text className='text-[16px] font-bold'>{item.amount}</Text>
+                            </View>
+                            <View className='flex-row justify-between'>
+                                <Text className='text-[16px] capitalize'>purchase amount</Text>
+                                <Text className='text-[16px] capitalize'>{item.quantity}</Text>
+                            </View>
+                            <View className='flex-row justify-between'>
+                                <Text className='text-[16px] capitalize'>Order id</Text>
+                                <Text className='text-[16px] capitalize'>{item._id}</Text>
+                            </View>
+                            {/* <View className='flex-row justify-between'>
+                                <Text className='text-[16px] capitalize'>trade time</Text>
+                                <Text className='text-[16px] capitalize'>{item.createdAt}</Text>
+                            </View> */}
+                        </View>
                     </View>
                 ))}
                 </View>
