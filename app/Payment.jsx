@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import ToastManager, { Toast } from 'toastify-react-native';
 import { AppContext } from '@/context/AppContext';
 import { Paystack } from 'react-native-paystack-webview';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');

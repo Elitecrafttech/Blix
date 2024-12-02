@@ -1,6 +1,7 @@
-import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native'
+import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useContext, useEffect, useRef, useState } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import ToastManager, { Toast } from 'toastify-react-native'
+import { useNavigation } from 'expo-router';
 import { AppContext } from '@/context/AppContext';
 
 const windowDimensions = Dimensions.get('window');
@@ -28,11 +29,15 @@ export default function Createpin() {
     };
 
     const confirmpin = async() => {
-        if(!otp){
-            return alert('Please enter OTP')
+        const otpValue = otp.join('');
+        if(!otpValue){
+            console.log("enter pin");
+            
+            return Toast.error('Please enter create pin')
+
             
         }
-        const otpValue = otp.join('');
+        
         if(otpValue){
             const response = await fetch('https://instant-chain.onrender.com/create-pin', {
                 method: 'POST',
@@ -47,12 +52,17 @@ export default function Createpin() {
             if(response.ok){
                 const data = await response.json();
                 console.log(data);
+                Toast.success("PIN created successfully");
 
-                // router.push('dashboard')
-                navigation.navigate('dashboard');
+                // navigation.navigate('dashboard');
                 
-            }else{
+            }else if (response.status === 409){
+                console.log('PIN already exists');
+                Toast.error('PIN already exists');
+            }
+            else{
                 console.log('Error creating pin');
+                Toast.error('Error creating pin')
             }
         }
         
@@ -77,11 +87,12 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
   return (
-    <ScrollView contentContainerStyle={styles.contentContainer}>
+    <ScrollView className='w-[100%] py-[50px] pt-[100px] bg-white'>
       <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
+      <ToastManager width={300} textStyle={{fontSize:17}} />
         <View className='gap-[100px]'>
 
-            <View className='gap-[30px]'>
+            <View className='gap-[30px] items-center'>
                 <Text className='font-bold text-[23px] capitalize text-center'>create new pin</Text>
                 <Text className='text-[16px] text-center'>input pin to login to your account</Text>
 
@@ -107,9 +118,9 @@ const [dimensions, setDimensions] = useState({
                 </View>
             </View>
     
-            <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]'>
-                <Text className='text-center capitalize text-[20px] text-white' onPress={confirmpin}>Continue</Text>
-            </Pressable>
+            <TouchableOpacity className='bg-[#FFAB10] rounded-xl p-[8px]' onPress={confirmpin}>
+                <Text className='text-center capitalize text-[20px] text-white' >Continue</Text>
+            </TouchableOpacity>
         </View>
     </View>
     </ScrollView>

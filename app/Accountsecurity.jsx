@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 
 const windowDimensions = Dimensions.get('window');
@@ -14,11 +14,12 @@ export default function AccountSecurity() {
 
 
     const change = () => {
-        // router.push('Changepassword')
         navigation.navigate('Changepassword');
     }
+    const Createpin = () => {
+        navigation.navigate('Createpin');
+    }
     const Resetpin = () => {
-        // router.push('Resetpin');
         navigation.navigate('Resetpin');
     }
 
@@ -58,6 +59,17 @@ const [dimensions, setDimensions] = useState({
                             <Entypo name="chevron-small-right" size={30} color="black" />
                         </Pressable>
                         <Text className='border-b-[0.3px] mb-[20px] border-b-gray-300'></Text>
+                        <Pressable className='flex-row items-center justify-between ' onPress={Createpin}>
+                            <View className='flex-row gap-[15px]'>
+                                <View className='bg-slate-200 rounded-full p-[10px]'><MaterialIcons name="exposure-zero" size={28} color="black" /></View>
+                                <View>
+                                    <Text className='font-semibold capitalize text-[16px]'>create pin</Text>
+                                    <Text className='capitalize'>create your transaction pin</Text>
+                                </View>
+                            </View>
+                            <Entypo name="chevron-small-right" size={30} color="black" />
+                        </Pressable>
+                        <Text className='border-b-[0.3px] mb-[20px] border-b-gray-300'></Text>
                         <Pressable className='flex-row items-center justify-between ' onPress={Resetpin}>
                             <View className='flex-row gap-[15px]'>
                                 <View className='bg-slate-200 rounded-full p-[10px]'><MaterialIcons name="exposure-zero" size={28} color="black" /></View>
@@ -68,17 +80,6 @@ const [dimensions, setDimensions] = useState({
                             </View>
                             <Entypo name="chevron-small-right" size={30} color="black" />
                         </Pressable>
-                        {/* <Text className='border-b-[0.3px] mb-[20px] border-b-gray-300'></Text>
-                        <Pressable className='flex-row items-center justify-between '>
-                            <View className='flex-row gap-[15px]'>
-                                <View className='bg-slate-200 rounded-full p-[10px]'><Entypo name="fingerprint" size={24} color="black" /></View>
-                                <View>
-                                    <Text className='font-semibold capitalize text-[16px]'>biometric verification</Text>
-                                    <Text className='capitalize'>activate fingerprint verification</Text>
-                                </View>
-                            </View>
-                            <Entypo name="switch" size={30} color="black" />
-                        </Pressable> */}
                     </View>
 
 

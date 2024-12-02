@@ -1,12 +1,12 @@
 import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native'
 import { useEffect, useRef, useState } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Confirmpin() {
-    // const navigation = useNavigation();
+    const navigation = useNavigation();
 
     const [otp, setOtp] = useState(['','','','','',]);
 
@@ -27,7 +27,7 @@ export default function Confirmpin() {
         const otpValue = otp.join('');
 
         console.log('OTP entered:', otpValue);
-        router.push('/')
+        navigation.navigate('/')
     };
 
 const [dimensions, setDimensions] = useState({

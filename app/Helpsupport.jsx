@@ -1,7 +1,7 @@
 import { View, Text, Dimensions, Pressable, ScrollView, Image} from 'react-native'
 import { useEffect, useState } from 'react'; 
 import Entypo from '@expo/vector-icons/Entypo';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 
 const windowDimensions = Dimensions.get('window');
@@ -12,7 +12,6 @@ export default function Helpsupport() {
 
 
     const form = () =>{
-        // router.push('/Fillform')
         navigation.navigate('Fillform');
     }
 

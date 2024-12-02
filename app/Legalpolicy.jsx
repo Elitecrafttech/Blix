@@ -2,7 +2,7 @@ import { View, Text, Dimensions, Pressable, ScrollView, Image} from 'react-nativ
 import { useEffect, useState } from 'react'; 
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
@@ -11,15 +11,12 @@ export default function Legalpolicy() {
     const navigation = useNavigation();
 
     const term = ()=>{
-        // router.push('TermsAndCondition');
         navigation.navigate('TermsAndCondition');
     }
     const policy = ()=>{
-        // router.push('PrivacyAndPolicy');
         navigation.navigate('PrivacyAndPolicy');
     }
     const refund = ()=>{
-        // router.push('RefundPolicy');
         navigation.navigate('RefundPolicy');
     }
 

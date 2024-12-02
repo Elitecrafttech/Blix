@@ -1,7 +1,7 @@
 import { View, Text, Dimensions, TextInput, Pressable, ScrollView,SafeAreaView, ActivityIndicator } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useEffect, useState, useContext } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import Eye from '@expo/vector-icons/Feather'
 import ToastManager, { Toast } from 'toastify-react-native';
 import { AppContext } from '@/context/AppContext';
@@ -143,21 +143,23 @@ const [dimensions, setDimensions] = useState({
                 value={password}
                 onChangeText={(text) => setPassword(text.replace(/\s/g, ''))}
                 />
-                <Eye name={showpassword? "eye" : "eye-off"} size={21} className=' px-[8px] py-[15px]' onPress={()=>setShowPassword(!showpassword)}/>
+                <Pressable className=' px-[8px] py-[15px]' onPress={()=>setShowPassword(!showpassword)}>
+                <Eye name={showpassword? "eye" : "eye-off"} size={21} />
+                </Pressable>
                 </View>
                 
                 <Pressable className='items-end p-[5px]' onPress={forgetpass}>
                     <Text className='capitalize text-[#FFAB10] font-bold text-[16px]' >forgot password?</Text>
                 </Pressable>
             </View>
-            <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]' onPress={handleSubmit}>
+            <Pressable className='bg-[#FFAB10] rounded-xl py-[8px] px-[20px]' onPress={handleSubmit} android_ripple={{color:"#FFAB10", foreground:true}}>
                 <Text className='text-center capitalize text-[25px] text-white' >{Loading ? "loading...":"login"}</Text>
             </Pressable>
         </View>
         <View className='items-center'>
             <View className='flex-row items-center'>
              <Text className='text-[16px] capitalize'>don’t have an account? </Text>
-             <Pressable className='p-[10px]' onPress={signUp} android_ripple={{color:"#000", foreground:true}}>
+             <Pressable className='p-[10px]' onPress={signUp}>
                 <Text className='text-[#FFAB10] font-bold text-[16px] capitalize' >sign up</Text>
              </Pressable>
             </View>

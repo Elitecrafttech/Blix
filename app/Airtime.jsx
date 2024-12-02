@@ -112,7 +112,7 @@ const [dimensions, setDimensions] = useState({
                             <CurrencyInput className='border-[#eaebeb] border-[1px] rounded-xl p-[10px] placeholder:text-[17px] placeholder:text-[gray]]],' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
                                 value={amount}
                                 onChangeValue={setAmount}
-                                prefix="₦"  
+                                prefix="$"  
                                 delimiter=","
                                 // separator="."
                                 precision={0}

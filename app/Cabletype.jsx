@@ -1,6 +1,6 @@
 import { View, Text, Dimensions, Pressable, Image, ScrollView,} from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 

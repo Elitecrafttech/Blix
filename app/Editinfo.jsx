@@ -1,6 +1,6 @@
 import { View, Text, Dimensions, Pressable, ScrollView, } from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Ionicons from '@expo/vector-icons/Ionicons';

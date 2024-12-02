@@ -4,7 +4,7 @@ import Eye from '@expo/vector-icons/Feather'
 import ToastManager, { Toast } from 'toastify-react-native'
 import { AppContext } from '@/context/AppContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');

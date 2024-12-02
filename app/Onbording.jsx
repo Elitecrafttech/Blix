@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import { View, Text, Image, Pressable, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Status from '@/components/Status';
@@ -11,11 +11,9 @@ export default function Onboarding() {
   const navigation = useNavigation();
 
     const handleSignin = () => {
-        // router.push('/Signin');
         navigation.navigate('Signin');
     }
     const handleRegister = () => {
-        // router.push('/Register');
         navigation.navigate('Register');
     }
 

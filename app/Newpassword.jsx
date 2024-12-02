@@ -2,7 +2,7 @@ import { View, Text, Dimensions, TextInput, Pressable, ScrollView } from 'react-
 import { useEffect, useState } from 'react'; 
 import Eye from '@expo/vector-icons/Feather'
 import ToastManager, { Toast } from 'toastify-react-native'
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
@@ -47,9 +47,6 @@ export default function Newpassword() {
             console.log(data);
             
             Toast.success('Success')
-
-            
-            // router.push('Signin');
             navigation.navigate('Signin');
         }else{
             setIsClicked(false);

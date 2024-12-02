@@ -1,6 +1,6 @@
 import { View, Text, Dimensions, TextInput, Pressable, ScrollView, } from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import ToastManager, { Toast } from 'toastify-react-native';
 import { AppContext } from '@/context/AppContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,7 +42,6 @@ export default function Forgetpassword() {
             console.log(message);
             
             Toast.success(message.message);
-            // router.push('/Forgetpassotp');
             navigation.navigate('Forgetpassotp');
         }else{
             setLoading(false);

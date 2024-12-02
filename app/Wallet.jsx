@@ -21,15 +21,12 @@ export default function Wallet() {
 
 
     const payment = () => {
-        // router.push('Payment');
         navigation.navigate('Payment');
     };
     const trx = () => {
-        // router.push('/Trxhistory');
         navigation.navigate('Trxhistory');
     };
     const fund = () =>{
-      // router.push('Withdrawfund')
       navigation.navigate('Withdrawfund');
     }
    
@@ -104,7 +101,7 @@ const [dimensions, setDimensions] = useState({
 
                     <View className='flex-grow  items-center'>
                       <View className='gap-2'>
-                        <Text className='text-[20px] font-bold text-[#292828]'>{t.title}</Text>
+                        <Text className='text-[16px] font-bold text-[#292828]'>{t.title}</Text>
                         <Text className='text-[#0000005C] text-[13px]'>{t.description}</Text>
                       </View>
                     </View>

@@ -9,21 +9,54 @@ const screenDimensions = Dimensions.get('screen');
 export default function Wallet() {
   const [ provider, setProvider] = useState('');
   const [acc, setAcc] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [accName, setAccName] = useState('');
+  const [sortCode, setSortCode] = useState('');
   const [amount, setAmount] = useState('');
   const [pin, setPin] = useState('');
   const [banks, setBanks] = useState([]);
+  const[isLoading, setLoading] = useState(false)
 
 const [dimensions, setDimensions] = useState({
     window: windowDimensions,
     screen: screenDimensions,
     });
 
+    const fetchUserBankName = async ()=>{
+      if(acc.length < 10){
+        setAccName("")
+      }
+      else if(acc.length === 10){
+        setLoading(true)
+        const userBankName = await fetch(`https://api.paystack.co/bank/resolve?account_number=${acc}&bank_code=${sortCode}`, {
+          headers: {
+            'Authorization': 'Bearer sk_test_75748d4128b64346d05f6f558ebd623ff22b4d8e',
+          },
+        })
+        const userBank = await userBankName.json();
+        
+        if(userBank.status === true){
+          setLoading(false)
+          setAccName(userBank?.data.account_name)
+          console.log(userBank);
+          
+        }else if(userBank.status === false){
+          setLoading(false)
+          setAccName('Could not verify your account name')
+          console.log(userBank);
+        }else if(acc.length < 9){
+          setAccName("")
+        }
+      }
+    }
+
     const fetchAvailableBanks = async()=>{
       const response = await fetch("https://instant-chain.onrender.com/supportedbanks")
       try {
         const data = await response.json();
         if(response.ok){
-          setBanks(data.banks);         
+          setBanks(data.banks);
+          await fetchUserBankName()
         }else{
           console.log(data);
           
@@ -35,6 +68,8 @@ const [dimensions, setDimensions] = useState({
 
     }
 
+    
+
     useEffect(() => {
       fetchAvailableBanks()
     const subscription = Dimensions.addEventListener(
@@ -45,6 +80,10 @@ const [dimensions, setDimensions] = useState({
         );
         return () => subscription?.remove();
     }, []);
+
+    useEffect(() => {
+      fetchUserBankName()
+    }, [acc]);
     
     const windowWidth = dimensions.window.width;
     const windowHeight = dimensions.window.height;
@@ -63,14 +102,15 @@ const [dimensions, setDimensions] = useState({
               selectedValue={provider}
               onValueChange={(itemValue) => {
                 setProvider(itemValue)
-                console.log(itemValue);
+                setSortCode(itemValue.code);
+                setBankName(itemValue.name);
                 
               }}
               className=' h-[50] w-full'>
 
                {/* <Picker.Item label="Choose bank" value="" /> */}
                {banks && banks.map(bank =>(
-                <Picker.Item label={bank.name} value={bank.name} key={bank.code} />
+                <Picker.Item label={bank.name} value={bank} key={bank.code} />
               ))}
               </Picker>
             </View>
@@ -79,12 +119,17 @@ const [dimensions, setDimensions] = useState({
           <View className='gap-[30px]'>
             <View className='gap-[20px]'>
               <Text className='capitalize text-[16px]'>Account number</Text>
-              <View className='flex-row items-center gap-[5px] border-[1px] border-[#d1d4df] rounded-xl p-[10px]' style={{width: windowWidth * 0.90, height: windowHeight * 0.06}}>
+              <View>
+                <View className='flex-row items-center gap-[5px] border-[1px] border-[#d1d4df] rounded-xl p-[10px]' style={{width: windowWidth * 0.90, height: windowHeight * 0.06}}>
                 <TextInput className='px-[10px] ' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
                 value={acc}
                 onChangeText={setAcc}
                 keyboardType='numeric'
                 />
+              </View>
+              {
+                isLoading ? <Text className='font-bold text-[18px]'>Fetching Account Name ..</Text>: <Text className='text-xl font-bold'>{accName ? accName : null}</Text>
+              }
               </View>
             </View>
 

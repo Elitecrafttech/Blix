@@ -1,7 +1,7 @@
 import { View, Text, Dimensions, Pressable, ScrollView} from 'react-native'
 import { useEffect, useState } from 'react'; 
 import {Picker} from '@react-native-picker/picker';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 
 
@@ -34,7 +34,6 @@ const [dimensions, setDimensions] = useState({
     const windowHeight = dimensions.window.height;
 
     const checkout = ()=> {
-        // router.push('Electricitycheckout');
         navigation.navigate('Electricitycheckout');
     }
     

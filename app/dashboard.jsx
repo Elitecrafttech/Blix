@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, useCallback} from 'react';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import { View, Text, Image, Pressable, Dimensions, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -61,6 +61,9 @@ export default function Dashboard() {
     const trade = () => {
       navigation.navigate('Trade');
   };
+    const kyc = () => {
+      navigation.navigate('Kyc');
+  };
 
   const [dimensions, setDimensions] = useState({
     window: windowDimensions,
@@ -84,7 +87,7 @@ export default function Dashboard() {
     const windowHeight = dimensions.window.height;
 
   return (
-    <View className='flex-[1] justify-center mt-10' style={{width: windowWidth, height: windowHeight - 60}}>
+    <View className='flex-[1] justify-center' style={{width: windowWidth, height: windowHeight - 60}}>
       {isLoading ? (
           <Preloader />
         ) : (
@@ -106,13 +109,15 @@ export default function Dashboard() {
             </View>
 
             {userData?.wallet?.user.isVerified == false? <View className='mt-2'>
-                  <Text className='text-[#FFAB10] text-[16px]'>Verify your account to continue enjoying our services.</Text>
+                  <Text className='text-[#FFAB10] text-[16px]' onPress={kyc}>Verify your account to continue enjoying our services.</Text>
             </View>: ""}
             <View className='flex-row justify-between items-center w-full gap-[10px]'>
               <View>
               <View className='flex-row  gap-4 items-center pt-[30px] gap-'>
                 <Text className='text-[#00000080] text-[16px] font-bold'>Your Balance</Text>
-                <Feather name={display? 'eye' : 'eye-off'} size={20} color="black" className=' p-[10px]' onPress={()=>setDisplay(!display)}/>
+                <Pressable className=' py-[10px] px-[20px]' onPress={()=>setDisplay(!display)}>
+                <Feather name={display? 'eye' : 'eye-off'} size={20} color="black"  />
+                </Pressable>
               </View>
               <Text className='text-[23px] font-bold'>{display? `${new Intl.NumberFormat('en-NG', {
                     style: 'currency',
@@ -130,7 +135,7 @@ export default function Dashboard() {
             <View className='W-[100%] flex-row justify-between items-center '>
             </View>
             <View className='w-[100%] flex-row mt-[35px] justify-around items-center'>
-              <Text className='text-[18px] border-b-[2px] border-[#FFAB10] text-[#FFAB10] pb-[10px] font-bold'>Service</Text>
+              <Text className='text-[18px] border-b-[2px] border-[#FFAB10] text-[#FFAB10] pb-[10px] font-bold' onPress={kyc}>Service</Text>
               <TouchableOpacity>
               <Text className='text-[18px] text-black font-bold p-[10px]' onPress={trxn}>p2p Trxn</Text>
               </TouchableOpacity>
@@ -175,7 +180,7 @@ export default function Dashboard() {
 
                   <View className='flex-grow  items-center gap-[20px]'>
                     <View className='gap-2'>
-                      <Text className='text-[20px] font-bold text-[#292828]'>{t.title}</Text>
+                      <Text className='text-[16px] font-bold text-[#292828]'>{t.title}</Text>
                       <Text className='text-[#0000005C] text-[13px]'>{t.description}</Text>
                     </View>
                   </View>

@@ -47,7 +47,7 @@ const [dimensions, setDimensions] = useState({
 
                   <View className='flex-grow  items-center gap-[20px]'>
                     <View className='gap-2'>
-                      <Text className='text-[20px] font-bold text-[#292828]'>{t.title}</Text>
+                      <Text className='text-[16px] font-bold text-[#292828]'>{t.title}</Text>
                       <Text className='text-[#0000005C] text-[13px]'>{t.description}</Text>
                     </View>
                   </View>

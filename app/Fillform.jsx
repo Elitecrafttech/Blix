@@ -12,7 +12,7 @@ const screenDimensions = Dimensions.get('screen');
 
 export default function Fillform() {
   const { userData, getUserDetails} = useContext(AppContext);
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const [name, setName] = useState(userData?.wallet?.user.username);
 
   const [dimensions, setDimensions] = useState({

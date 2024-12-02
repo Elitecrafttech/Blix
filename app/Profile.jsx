@@ -1,6 +1,6 @@
 import { View, Text, Dimensions, Pressable, Image, ScrollView, } from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import Entypo from '@expo/vector-icons/Entypo';
 import Lock from '@expo/vector-icons/MaterialCommunityIcons';

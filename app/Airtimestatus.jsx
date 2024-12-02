@@ -1,7 +1,7 @@
 import { View, Text, Dimensions, Pressable, ScrollView} from 'react-native'
 import { useContext, useEffect, useState } from 'react';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '@/context/AppContext';
 

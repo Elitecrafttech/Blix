@@ -1,6 +1,6 @@
 import { View, Text, Dimensions, Pressable, Image, ScrollView,} from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import Entypo from '@expo/vector-icons/Entypo';
 
 const windowDimensions = Dimensions.get('window');
@@ -10,15 +10,12 @@ export default function PeerToPeer() {
   const navigation = useNavigation();
 
   const crypto = () => {
-    // router.push('Tradecrypto');
     navigation.navigate('Tradecrypto');
   }
   const paypal = () => {
-    // router.push('Tradepaypal');
     navigation.navigate('Tradepaypal');
   }
   const payonerr = () => {
-    // router.push('Tradepayonerr');
     navigation.navigate('Tradepayonerr');
   }
 

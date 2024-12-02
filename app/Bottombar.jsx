@@ -1,7 +1,7 @@
 import { View, Text, Dimensions,TouchableOpacity, } from 'react-native'
 import { useEffect, useState } from 'react'; 
 import { Ionicons } from '@expo/vector-icons';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';

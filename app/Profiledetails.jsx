@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, TextInput, Pressable, ScrollView, } from 'react-native'
+import { View, Text, Dimensions, ScrollView, } from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
 import { AppContext } from '@/context/AppContext';
 
@@ -51,11 +51,11 @@ const [dimensions, setDimensions] = useState({
         </View>
         <View className='flex-row justify-between'>
             <Text className='capitalize text-[20px] font-bold'>date joined :</Text>
-            <Text className='capitalize text-[20px]'>{userData?.wallet?.user.createdAt}</Text>
+            <Text className='capitalize text-[20px]'>{new Intl.DateTimeFormat('en-NG', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(userData?.wallet?.user.createdAt))}</Text>
         </View>
         <View className='flex-row justify-between'>
             <Text className='capitalize text-[20px] font-bold'>last update :</Text>
-            <Text className='capitalize text-[20px]'>{userData?.wallet?.user.updatedAt}</Text>
+            <Text className='capitalize text-[20px]'>{new Intl.DateTimeFormat('en-NG', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(userData?.wallet?.user.updatedAt))}</Text>
         </View>
 
    

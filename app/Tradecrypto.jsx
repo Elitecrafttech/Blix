@@ -1,118 +1,118 @@
-import { View, Text, Dimensions, TouchableOpacity, ScrollView, FlatList} from 'react-native'
-import { useEffect, useState, useContext } from 'react'; 
-import { router, useNavigation} from 'expo-router';
-import { AppContext } from '@/context/AppContext';
-
-
-const windowDimensions = Dimensions.get('window');
-const screenDimensions = Dimensions.get('screen');
-
-
-export default function Tradecrypto() {
+import {
+    View, Text, Dimensions, TouchableOpacity, FlatList, } from 'react-native';
+  import { useEffect, useState, useContext } from 'react';
+  import { useNavigation } from 'expo-router';
+  import { AppContext } from '@/context/AppContext';
+import Cryptomodal from './Cryptomodal';
+  
+  export default function Tradecrypto() {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [isClick, setClick] = useState(false)
+    
     const navigation = useNavigation();
-
     const { user } = useContext(AppContext);
-    const tk = JSON.parse(user)
+    const token = JSON.parse(user);
+  
+    const [trades, setTrades] = useState([]);
+    const [trade, setTrade] = useState(null);
+    const [dimensions, setDimensions] = useState({
+      window: Dimensions.get('window'),
+      screen: Dimensions.get('screen'),
+    });
 
-    const [trades, setTrades] = useState([])
+    const openModal = (trade)=>{
+      setModalVisible(true)
+      setTrade(trade)
+      setClick(true)
+    }
+  
+    const closeModal = ()=>{
+      setModalVisible(false)
+      setTrade(null)
+      setClick(false)
+    }
 
-
-    const fetcTrade = async()=>{
-        const response = await fetch("https://instant-chain.onrender.com/api/v1/trades/trades", {
+    const fetchTrade = async () => {
+      try {
+        const response = await fetch(
+          'https://instant-chain.onrender.com/api/v1/trades/trades/crypto',
+          {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${tk}`
-            }
-        })
-        if(response.ok){
-            const Data =  await response.json();
-            console.log(Data.trades);
-            setTrades(Data.trades)
-            
-
-        }else{
-            const error = await response.json();
-            console.log(error);
-        }
-    }
-
-    const crypto = () =>{
-        navigation.navigate('singleTrade');
-    }
-
-    const [dimensions, setDimensions] = useState({
-        window: windowDimensions,
-        screen: screenDimensions,
-        });
-    
-        
-    
-        useEffect(() => {
-            fetcTrade()
-        const subscription = Dimensions.addEventListener(
-            'change',
-            ({ window, screen }) => {
-                setDimensions({ window, screen });
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
             },
-            );
-            return () => subscription?.remove();
-        }, []);
-        
-        const windowWidth = dimensions.window.width;
-        const windowHeight = dimensions.window.height;
-
-  return (
-    <View className='w-[100%] py-[50px] bg-white'  style={{width: windowWidth, height: windowHeight - 60}}>
-          <View style={{padding: windowWidth * 0.05, gap: 100, height: dimensions.screen}}>
-                <View className='gap-[20px]'>
-                    <View className='gap-[30px]'>
-                        {/* {trades.map((data, index)=>(
-                            <View className='flex-row items-center justify-between' key={index}>
-                                <View className='gap-[5px]'>
-                                <Text className='text-[18px]'>user:
-                                    {data.user}
-                                    </Text>
-                                <Text className='text-[25px]'>price {data.price}</Text>
-                                <Text>quantity {data.quantity}</Text>
-                                <Text>tradeType {data.tradeType}</Text>
-                                <Text>ID {data._id}</Text>
-                                </View>
-                                <TouchableOpacity>
-                                 <Text className='border-[#FFAB10] border-[2px] p-[10px] text-center rounded-xl text-[#b6852a] w-[20vw] text-[17px]' onPress={crypto}>Buy</Text>
-                                </TouchableOpacity>
-                            </View>  
-                        ))} */}
-
-                   
-                            <FlatList
-                            
-                            data={trades}
-                            keyExtractor={item => item._id}
-                            renderItem={({item}) => (
-                                <TouchableOpacity onPress={()=>navigation.navigate("singleTrade", {id: item._id})} cl >
-                                    <View className='flex-row items-center justify-between' key={item._id}>
-                                <View className='gap-[5px]'>
-                                <Text className='text-[18px]'>user:
-                                    {item.user}
-                                    </Text>
-                                <Text className='text-[25px]'>price {item.price}</Text>
-                                <Text>quantity {item.quantity}</Text>
-                                <Text>tradeType {item.tradeType}</Text>
-                                <Text>ID {item._id}</Text>
-                                </View>
-                                
-                            </View> 
-
-                             </TouchableOpacity>
-                        )}
-
-                                        
-                            />
-                        
-                    </View>   
+          }
+        );
+  
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Fetched trades:', data.trades);
+          setTrades(data.trades);
+        } else {
+          const error = await response.json();
+          console.error('Error fetching trades:', error);
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchTrade();
+  
+      const subscription = Dimensions.addEventListener('change', ({ window, screen }) => {
+        setDimensions({ window, screen });
+      });
+  
+      return () => subscription?.remove();
+    }, []);
+  
+    const windowWidth = dimensions.window.width;
+    const windowHeight = dimensions.window.height;
+  
+    return (
+      <View
+        className="w-full py-5 bg-white"
+        style={{ width: windowWidth, height: windowHeight - 60 }}
+      >
+        <View style={{ padding: windowWidth * 0.05, gap: 20 }}>
+         {
+          !isClick ?  (<FlatList
+          data={trades}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => openModal(item)}
+            >
+              <View className="flex-row items-center justify-between my-5">
+                <View className="gap-2">
+                  <Text className="text-lg">Seller: {item.user.username}</Text>
+                  <Text className="text-xl">Price: {new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(item.price)}</Text>
+                  <Text>Quantity Available for sale: {item.quantity}</Text>
+                  <Text>Trade Type: {item.tradeType}</Text>
+                  <Text>Trade ID: {item._id}</Text>
                 </View>
-          </View>
+              </View>
+            </TouchableOpacity>
+          )}
+          ListEmptyComponent={
+            <View className="flex justify-center items-center">
+              <Text>No trades available.</Text>
+            </View>
+          }
+        />)
+        :(
+        <Cryptomodal
+        visible={modalVisible}
+        onClose={closeModal}
+        trades={trade}
+        
+        />
+        )
+         }
         </View>
-  )
-}
+      </View>
+    );
+  }
+  

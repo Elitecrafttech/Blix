@@ -1,7 +1,7 @@
 import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet, SafeAreaView } from 'react-native'
 import { useEffect, useState } from 'react'; 
 import Eye from '@expo/vector-icons/Feather'
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import ToastManager, { Toast } from 'toastify-react-native'
 import Status from '@/components/Status';
 
@@ -70,8 +70,7 @@ export default function Register() {
             console.log(message.message);
             
             Toast.success(message.message);
-        // router.push('/Createpin');
-            navigation.navigate('Createpin');
+            navigation.navigate('dashboard');
         }else{
             setIsClicked(false)
             const error = await response.json();
@@ -82,7 +81,6 @@ export default function Register() {
         
     };
     const signin = () => {
-        // router.push('/Signin');
         navigation.navigate('Signin');
     }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { createContext } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import ToastManager, { Toast } from 'toastify-react-native';
 export const AppContext = createContext();
 
@@ -77,7 +77,6 @@ const logout = async()=>{
   await AsyncStorage.removeItem("tk")
   setIsAuthenticated(false);
   setUser(null);
-  // router.push('Signin');
   navigation.navigate('Signin');
   navigation.reset({routes:[{name: 'Signin'}]})
 }
@@ -92,7 +91,6 @@ const logout = async()=>{
     }else{  
       AsyncStorage.removeItem("tk")
       setIsAuthenticated(false);
-      router.push('Signin');
     }
    }, [])
    

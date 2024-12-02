@@ -1,6 +1,6 @@
 import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native'
 import { useContext, useEffect, useRef, useState } from 'react'; 
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '@/context/AppContext';
 
@@ -41,7 +41,6 @@ export default function Forgetpassotp() {
                 const res = await response.json()
                 if(response.ok){
                     console.log('OTP entered:', otpValue);
-                    // router.push('Newpassword')
                     navigation.navigate('Newpassword');
                 }else{
                     alert('Invalid OTP');
