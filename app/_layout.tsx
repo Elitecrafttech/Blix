@@ -33,7 +33,7 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      {/* <NavigationContainer theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
         <AppContextProvider>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -49,7 +49,7 @@ export default function RootLayout() {
             <Stack.Screen name="Legalpolicy" options={{ headerShown: false, title: "Legal Policy" }} />
           </Stack>
         </AppContextProvider>
-      </NavigationContainer>
+      {/* </NavigationContainer> */}
     </GestureHandlerRootView>
   );
 }

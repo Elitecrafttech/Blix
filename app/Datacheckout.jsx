@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import {  useNavigation } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '@/context/AppContext';
+import Datastatus from './Datastatus';
 
 
 const windowDimensions = Dimensions.get('window');
@@ -11,7 +12,8 @@ const screenDimensions = Dimensions.get('screen');
 export default function Datacheckout() {
     const navigation = useNavigation();
 
-    const { userData, getUserDetails } = useContext(AppContext);
+    const { userData, getUserDetails, user } = useContext(AppContext);
+    const tk = JSON.parse(user);
     
     
 
@@ -20,10 +22,11 @@ export default function Datacheckout() {
     const [amount, setAmount] = useState('');
     const [code, setCode] = useState('');
     const [selectedPlan, setSelectedPlan] = useState('');
+    const [click, setClick] = useState(false);
 
     async function dataprvd(){
         const prv = await AsyncStorage.getItem('provider');
-        const nm = await AsyncStorage.getItem('number');
+        const nm = await AsyncStorage.getItem('beneficiary');
         const amt = await AsyncStorage.getItem('amount');
         const cde = await AsyncStorage.getItem('code')
         const pln = await AsyncStorage.getItem('plan')
@@ -34,11 +37,33 @@ export default function Datacheckout() {
         setCode(cde);
         setSelectedPlan(pln);
     }
-    const status = ()=>{
-        if(provider || number || amount || code == 'true'){
-            navigation.navigate('Datastatus');
+    const status = async()=>{
+        setClick(true)
+        
+
+        const response = await fetch('https://instant-chain.onrender.com/api/v1/trades/data-recharge', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tk}`
+            },
+            body: JSON.stringify({
+                provider,
+                beneficiary: number,
+                amount,
+                code,
+            })
+        })
+        if(response.ok){
+            setClick(false);
+            const data = await response.json();
+            console.log(data);
+            navigation.navigate(Datastatus);
+            
         }else{
-            navigation.navigate('Airtime');
+            setClick(false);
+            const error = await response.json()
+            console.log(error);
         }
     }
 
@@ -100,8 +125,8 @@ const [dimensions, setDimensions] = useState({
                             
                         </View>                     
                     </View>
-                    <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]'>
-                     <Text className='text-center capitalize text-[20px] text-white' onPress={status}>pay now</Text>
+                    <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]' onPress={status}>
+                     <Text className='text-center capitalize text-[20px] text-white' >{click ? "Please wait..."  : "pay now"}</Text>
                     </Pressable>
                 </View>
                 

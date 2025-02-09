@@ -115,4 +115,3 @@ import Cryptomodal from './Cryptomodal';
       </View>
     );
   }
-  

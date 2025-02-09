@@ -90,10 +90,8 @@ export default function Payment() {
           onCancel={(res)=>(console.log(res))}
           onSuccess={async(res)=>{
             let am = amount / 100 * 1.5;
-            // const response = res["transactionRef"]["message"];
             const reference = res["transactionRef"]["reference"];
         
-            // if (response === "Approved"){
               setLoading(false);
                 const SendToBE = await fetch('https://instant-chain.onrender.com/verify-payment', {
                   method:"POST",
@@ -107,7 +105,6 @@ export default function Payment() {
                 const verify = await SendToBE.json()
                 console.log(verify);
                 Alert.alert('Payment Successful')
-                // router.push('dashboard')
                 navigation.navigate('dashboard');
          
           }}
@@ -123,160 +120,3 @@ export default function Payment() {
     </ScrollView>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { View, Text, TextInput, Pressable, Alert } from 'react-native'
-// import React, { useContext, useEffect, useState } from 'react'
-// import { ScrollView } from 'react-native-gesture-handler'
-// import { AppContext } from '@/context/AppContext';
-// import { Paystack } from 'react-native-paystack-webview';
-
-// export default function Payment() {
-
-//     const { userData, getUserDetails} = useContext(AppContext);
-
-
-//     const [pay, setPay] = useState(false)
-//     const [mail, setMail] = useState(userData?.wallet?.user.email);
-//     const [amount, setAmount] = useState('5000');
-
-//     useEffect(()=>{
-//         getUserDetails()
-     
-//     }, [])
-
-
-
-//     const handlePayment = async() => {
-//       if(mail && amount){
-//         setPay(true)
-//        }else{
-//         console.log("fill the field");
-  
-//        }
-//    //    try {
-//    //      const response = await fetch("https://api.paystack.co/transaction/initialize", {
-//    //         method: 'POST',
-//    //         headers: {
-//    //            'Authorization': 'Bearer sk_test_dd0cd874a38f509daaeaaa067079a842d6a3348d',
-//    //            'Content-Type': 'application/json',
-//    //         },
-//    //         body: JSON.stringify({
-//    //            amount: Number(amount) * 100,
-//    //            email: mail,
-//    //         }),
-//    //      });
-        
-//    //      const result = await response.json();
-        
-//    //      if (response.ok) {
-//    //         console.log("Success", result);
-//    //         const {reference} = result.data;
-//    //       //   popup.resumeTransaction(result.data.access_code);
-//    //       const SendToBE = await fetch("message", {
-//    //          method: 'POST',
-//    //          headers: {
-//    //              'Content-Type': 'application/json',
-//    //          },
-//    //          body: JSON.stringify({ reference }),
-//    //       })
-//    //       if (SendToBE.ok) {
-//    //          await SendToBE.json()
-//    //       }else {
-//    //           console.log("Error", SendToBE.json());
-   
-//    //       }
-           
-//    //      } else {
-//    //         console.log("Error", result);
-//    //      }
-//    //   }
-//    //    catch (error) {
-//    //      console.log("Fetch error: ", error);
-//    //   }
-//     };
-
-
-    
-//   return (
-//     <ScrollView className='w-[100%] py-[50px] px-[60px]'>
-//       <View className='gap-5'>
-//          <Text>Payment</Text>
-//          <View className='gap-5'>
-//             <TextInput className='border border-[grey] p-[10px] placeholder:text-[gray]'
-//             placeholder='Enter Payment Mail'
-//             value={mail}
-//             onChangeText={setMail}
-//             />
-//             <TextInput className='border border-[grey] p-[10px] placeholder:text-[gray]'
-//             placeholder='Enter Amount'
-//             value={amount}
-//             onChangeText={setAmount}
-//             keyboardType='numeric'
-//             />
-//             {pay && 
-//         <Paystack
-//           amount={amount}
-//           billingEmail={mail}
-//           currency='NGN'
-//           paystackKey='pk_test_d3194fee7f007b3480990d06a7f2c16978dbd3b4'
-//           onCancel={(res)=>(console.log(res))}
-//           onSuccess={async(res)=>{
-//             const response = res["transactionRef"]["message"];
-//             if (response === "Approved"){
-//               const responseData = await fetch("https://api.paystack.co/transaction/initialize", {
-//                         method: 'POST',
-//                         headers: {
-//                            'Authorization': 'Bearer pk_test_d3194fee7f007b3480990d06a7f2c16978dbd3b4',
-//                            'Content-Type': 'application/json',
-//                         },
-//                         body: JSON.stringify({
-//                            amount: Number(amount) * 100,
-//                            email: mail,
-//                         }),
-//                      });
-//                      if(response.status === 200){
-//                       Alert.alert('success order')
-//                      }
-//             }
-//           }}
-//           autoStart={pay}
-//           />
-//           }
-//          </View>
-//          <Pressable className='bg-[#FFAB10] items-center p-[10px]' onPress={handlePayment}>
-//           <Text >Continue</Text>
-//          </Pressable>
-//       </View>
-//     </ScrollView>
-//   )
-// }

@@ -18,7 +18,7 @@ export default function Dashboard() {
   const navigation = useNavigation();
 
   const {userData, getUserDetails, transaction, isLoading} = useContext(AppContext)
-  const [display, setDisplay] = useState(false)
+  const [display, setDisplay] = useState(true)
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -81,7 +81,7 @@ export default function Dashboard() {
         },
         );
         return () => subscription?.remove();
-    }, []);
+    }, [userData]);
     
     const windowWidth = dimensions.window.width;
     const windowHeight = dimensions.window.height;

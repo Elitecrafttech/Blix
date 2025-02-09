@@ -1,12 +1,17 @@
 import { View, Text, Dimensions, TextInput, Pressable, ScrollView, FlatList} from 'react-native'
 import { useEffect, useState, useContext } from 'react'; 
+import CurrencyInput from 'react-native-currency-input';
 import {Picker} from '@react-native-picker/picker';
+import { AppContext } from '@/context/AppContext';
 
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Wallet() {
+  const { user } = useContext(AppContext);
+  const tk = JSON.parse(user);
+
   const [ provider, setProvider] = useState('');
   const [acc, setAcc] = useState('');
   const [bankName, setBankName] = useState('');
@@ -68,6 +73,35 @@ const [dimensions, setDimensions] = useState({
 
     }
 
+    const withdrawal = async()=>{
+
+      console.log({
+        accountNumber: acc,
+        bankCode: sortCode,
+        amount
+      });
+      
+      // const response = await fetch("https://instant-chain.onrender.com/withdraw",{
+      //   method: "POST",
+      //   headers:{
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Bearer ${tk}`
+      //   },
+      //   body: JSON.stringify({
+      //     accountNumber: acc,
+      //     bankCode: sortCode,
+      //     amount
+      //   })
+      // });
+      // if(response.ok){
+      //   const data = await response.json();
+      //   console.log(data);
+      // }else{
+      //   const error = await response.json();
+      //   console.log(error, "Failed to withdraw");
+      // }
+    }
+
     
 
     useEffect(() => {
@@ -104,6 +138,8 @@ const [dimensions, setDimensions] = useState({
                 setProvider(itemValue)
                 setSortCode(itemValue.code);
                 setBankName(itemValue.name);
+                console.log(itemValue);
+                
                 
               }}
               className=' h-[50] w-full'>
@@ -141,6 +177,17 @@ const [dimensions, setDimensions] = useState({
                 onChangeText={setAmount}
                 keyboardType='numeric'
                 />
+
+
+              {/* <CurrencyInput className='px-[10px] ' style={{width: windowWidth * 0.81, height: windowHeight * 0.06}}
+                  value={amount}
+                  onChangeValue={setAmount}
+                  prefix="₦"  
+                  delimiter=","
+                  // separator="."
+                  precision={0}
+                  placeholder="Amount"
+              /> */}
               </View>
             </View>
 
@@ -159,7 +206,7 @@ const [dimensions, setDimensions] = useState({
         </View>
 
     <Pressable className='bg-[#FFAB10] rounded-xl p-[8px]'>
-        <Text className='text-center capitalize text-[20px] text-white' >Withdraw fund</Text>
+        <Text className='text-center capitalize text-[20px] text-white' onPress={withdrawal}>Withdraw fund</Text>
     </Pressable>
     </View>
     </ScrollView>

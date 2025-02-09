@@ -61,11 +61,6 @@ export default function Databundle() {
         return;
       }
 
-      // if (availability !== "available") {
-      //   Alert.alert('This plan is not available');
-      //   return;
-      // }
-
       await AsyncStorage.setItem("amount", JSON.stringify(amount))
       await AsyncStorage.setItem("beneficiary", number)
       await AsyncStorage.setItem("provider", provider)

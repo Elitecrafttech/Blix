@@ -1,5 +1,5 @@
-import { View, Text, Dimensions, Pressable, ScrollView, Image, Button, Platform, TextInput, TouchableOpacity } from 'react-native'
-import { useEffect, useState, useContext } from 'react'; 
+import { View, Text, Dimensions, Pressable, ScrollView, Image, Platform, TextInput, TouchableOpacity } from 'react-native'
+import { useEffect, useState } from 'react'; 
 import * as ImagePicker from 'expo-image-picker';
 
 

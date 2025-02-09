@@ -1,11 +1,10 @@
-import { View, Text, Dimensions, TextInput, Pressable, ScrollView, StyleSheet, SafeAreaView } from 'react-native'
+import { View, Text, Dimensions, TextInput, Pressable, ScrollView, SafeAreaView } from 'react-native'
 import { useEffect, useState } from 'react'; 
 import Eye from '@expo/vector-icons/Feather'
 import { useNavigation } from 'expo-router';
 import ToastManager, { Toast } from 'toastify-react-native'
 import Status from '@/components/Status';
 
-// import 'react-toastify/dist/ReactToastify.css';
 
 
 const windowDimensions = Dimensions.get('window');

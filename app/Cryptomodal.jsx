@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, Modal, Pressable, Button, Alert, TextInput, Dimensions, ScrollView, SafeAreaView} from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
+import { Text, View, Modal, Pressable, Button, Alert, TextInput, Dimensions, ScrollView, SafeAreaView, TouchableOpacity} from 'react-native'
 import { useNavigation } from 'expo-router';
+import { AppContext } from '@/context/AppContext';
 
 
 const windowDimensions = Dimensions.get('window');
 const screenDimensions = Dimensions.get('screen');
 
 export default function Cryptomodal({onClose, visible, trades, msg}) {
+    const {user} = useContext(AppContext);
+    const tk = JSON.parse(user);
 
     const [amount, setAmount] = useState(0);
     const [wallet, setWallet] = useState('');
+    // const [tradeid, setTradeid] = useState('');
 
 
     let price = Number(trades.price);
@@ -23,11 +27,50 @@ export default function Cryptomodal({onClose, visible, trades, msg}) {
   }).format(payPrice);
 
     const navigation = useNavigation();
-    const handleBuy = () => {
-        navigation.navigate("Orderstransaction")
-        Alert.alert("You have purchase a trade")
+    const handleBuy = async() => {
+        if (!amount || isNaN(amount) || Number(amount) <= 0) {
+            Alert.alert("Invalid Input", "Please enter a valid amount.");
+            return;
+        }
+        if (!wallet.trim()) {
+            Alert.alert("Invalid Input", "Please enter a valid wallet address.");
+            return;
+        }
 
-    }
+        try {
+            const response = await fetch(
+                `https://instant-chain.onrender.com/api/v1/trades/p2p/${trades._id}`, 
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${tk}`
+                    },
+                    body: JSON.stringify({
+                       buyerQuantity: amount,
+                        walletAddress: wallet,
+                    })
+                }
+            );
+    
+            if (response.ok) {
+                const data = await response.json();
+                Alert.alert(
+                    "Purchase Successful", 
+                    `You have successfully bought a trade. Trade ID: ${data.tradeId}`
+                );
+                onClose(); // Close the modal
+            } else {
+                const error = await response.json();
+                console.error("Error Response:", error);
+                // Alert.alert("Failed to Purchase Trade", error.message || "An error occurred.");
+            }
+        } catch (err) {
+            console.error("Fetch Error:", err);
+            // Alert.alert("Error", "Unable to complete the transaction. Please try again.");
+        }
+    };
+
 
     if(!trades){
         return null;
@@ -115,9 +158,9 @@ export default function Cryptomodal({onClose, visible, trades, msg}) {
                         <Text className='text-[18px]' >{formattedNumber}</Text>
                     </View>
                 </View> 
-                    <Pressable className='bg-[#FFAB10] p-[10px] text-center rounded-xl w-[100%] mt-[40px]' onPress={handleBuy}>
+                    <TouchableOpacity className='bg-[#FFAB10] p-[10px] text-center rounded-xl w-[100%] mt-[40px]' onPress={handleBuy}>
                         <Text className='capitalize text-[23px] text-white text-center' >pay now</Text>
-                    </Pressable>
+                    </TouchableOpacity>
                     
         </View>
         </View>

@@ -1,12 +1,7 @@
 import { View, Text, Dimensions, Pressable, Image, ScrollView, } from 'react-native'
-import { useEffect, useState, useContext } from 'react'; 
-import { router, useNavigation } from 'expo-router';
-import Feather from '@expo/vector-icons/Feather';
+import { useEffect, useState } from 'react'; 
+import { useNavigation } from 'expo-router';
 import Entypo from '@expo/vector-icons/Entypo';
-import Lock from '@expo/vector-icons/MaterialCommunityIcons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import Bottombar from './Bottombar';
-import { AppContext } from '@/context/AppContext';
 
 
 const windowDimensions = Dimensions.get('window');

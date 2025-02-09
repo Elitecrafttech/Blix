@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, Modal, Pressable, Button, Alert, TextInput, Dimensions, ScrollView, SafeAreaView} from 'react-native'
+import { Text, View, Modal, Pressable, Button, Alert, TextInput, Dimensions, ScrollView } from 'react-native'
 import { useNavigation } from 'expo-router';
 
 
